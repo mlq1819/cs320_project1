@@ -47,3 +47,5 @@ class doubleBimodal{
 		double percent(){return ((double) this->correct)/this->total;};
 		double predict(std::ifstream);
 };
+
+#endif
