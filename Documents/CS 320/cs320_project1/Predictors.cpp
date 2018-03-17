@@ -2,7 +2,7 @@
 
 using namespace std;
 
-double AlwaysTaken::predict(ifstream file){
+double AlwaysTaken::predict(ifstream * file){
 	string str;
 	while(getline(file, str)){
 		if(str[11]=='T')
@@ -12,7 +12,7 @@ double AlwaysTaken::predict(ifstream file){
 	return this->percent();
 }
 
-double NeverTaken::predict(ifstream file){
+double NeverTaken::predict(ifstream * file){
 	string str;
 	while(getline(file, str)){
 		if(str[11]=='N')
@@ -22,7 +22,7 @@ double NeverTaken::predict(ifstream file){
 	return this->percent();
 }
 
-double SingleBimodal::predict(ifstream file){
+double SingleBimodal::predict(ifstream * file){
 	string str;
 	while(getline(file, str)){
 		unsigned long index = stoul(str.substr(2,8), nullptr, 16);
@@ -38,7 +38,7 @@ double SingleBimodal::predict(ifstream file){
 	return this->percent();
 }
 
-double DoubleBimodal::predict(ifstream file){
+double DoubleBimodal::predict(ifstream * file){
 	string str;
 	while(getline(file, str)){
 		unsigned long index = stoul(str.substr(2,8), nullptr, 16);

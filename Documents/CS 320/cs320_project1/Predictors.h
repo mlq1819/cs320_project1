@@ -13,7 +13,7 @@ class AlwaysTaken{
 	public:
 		AlwaysTaken(){this->correct=this->total=0;};
 		double percent(){return ((double) this->correct)/this->total;};
-		double predict(std::ifstream);
+		double predict(std::ifstream*);
 };
 
 class NeverTaken{
@@ -23,7 +23,7 @@ class NeverTaken{
 	public:
 		NeverTaken(){this->correct=this->total=0;};
 		double percent(){return ((double) this->correct)/this->total;};
-		double predict(std::ifstream);
+		double predict(std::ifstream*);
 };
 
 class SingleBimodal{
@@ -34,7 +34,7 @@ class SingleBimodal{
 	public:
 		SingleBimodal(){this->correct=this->total=0;};
 		double percent(){return ((double) this->correct)/this->total;};
-		double predict(std::ifstream);
+		double predict(std::ifstream*);
 };
 
 class DoubleBimodal{
@@ -45,7 +45,7 @@ class DoubleBimodal{
 	public:
 		DoubleBimodal(){this->correct=this->total=0;};
 		double percent(){return ((double) this->correct)/this->total;};
-		double predict(std::ifstream);
+		double predict(std::ifstream*);
 };
 
 #endif
