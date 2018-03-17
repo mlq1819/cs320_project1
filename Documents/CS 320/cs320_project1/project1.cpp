@@ -9,10 +9,8 @@ int main(int argc, char *argv[]){
 		cout << "Too many arguments" << endl;
 		return 0;
 	}
-	ifstream file(argv[1]);
-	if(!file){
-		cout << "Bad input file" << endl;
-		return 0;
+	ifstream file();
+	file.open(argv[1]);
 	} else {
 		cout << "Reading " << argv[1] << endl;
 	}

@@ -3,31 +3,26 @@
 using namespace std;
 
 double AlwaysTaken::predict(ifstream file){
-	file.open();
 	string str;
 	while(getline(file, str)){
 		if(str[11]=='T')
 			this->correct++;
 		this->total++;
 	}
-	file.close();
 	return this->percent();
 }
 
 double NeverTaken::predict(ifstream file){
-	file.open();
 	string str;
 	while(getline(file, str)){
 		if(str[11]=='N')
 			this->correct++;
 		this->total++;
 	}
-	file.close();
 	return this->percent();
 }
 
 double singleBimodal::predict(ifstream file){
-	file.open();
 	string str;
 	while(getline(file, str)){
 		unsigned long index = stoul(str.substr(2,8), nullptr, 16);
@@ -40,12 +35,10 @@ double singleBimodal::predict(ifstream file){
 			this->history[index]=!num;
 		this->total++;
 	}
-	file.close();
 	return this->percent();
 }
 
 double doubleBimodal::predict(ifstream file){
-	file.open();
 	string str;
 	while(getline(file, str)){
 		unsigned long index = stoul(str.substr(2,8), nullptr, 16);
@@ -64,6 +57,5 @@ double doubleBimodal::predict(ifstream file){
 		}
 		this->total++;
 	}
-	file.close();
 	return this->percent();
 }
