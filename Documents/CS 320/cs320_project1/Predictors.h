@@ -17,7 +17,7 @@ class AlwaysTaken{
 };
 
 class NeverTaken{
-	private:
+	private: 
 		long correct;
 		long total;
 	public:
