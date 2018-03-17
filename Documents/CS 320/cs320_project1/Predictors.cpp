@@ -22,7 +22,7 @@ double NeverTaken::predict(ifstream file){
 	return this->percent();
 }
 
-double singleBimodal::predict(ifstream file){
+double SingleBimodal::predict(ifstream file){
 	string str;
 	while(getline(file, str)){
 		unsigned long index = stoul(str.substr(2,8), nullptr, 16);
@@ -38,7 +38,7 @@ double singleBimodal::predict(ifstream file){
 	return this->percent();
 }
 
-double doubleBimodal::predict(ifstream file){
+double DoubleBimodal::predict(ifstream file){
 	string str;
 	while(getline(file, str)){
 		unsigned long index = stoul(str.substr(2,8), nullptr, 16);

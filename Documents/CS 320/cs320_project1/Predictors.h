@@ -26,24 +26,24 @@ class NeverTaken{
 		double predict(std::ifstream);
 };
 
-class singleBimodal{
+class SingleBimodal{
 	private:
 		std::vector<bool> history;
 		long correct;
 		long total;
 	public:
-		singleBimodal(){this->correct=this->total=0;};
+		SingleBimodal(){this->correct=this->total=0;};
 		double percent(){return ((double) this->correct)/this->total;};
 		double predict(std::ifstream);
 };
 
-class doubleBimodal{
+class DoubleBimodal{
 	private:
 		std::vector<int> history;
 		long correct;
 		long total;
 	public:
-		doubleBimodal(){this->correct=this->total=0;};
+		DoubleBimodal(){this->correct=this->total=0;};
 		double percent(){return ((double) this->correct)/this->total;};
 		double predict(std::ifstream);
 };
