@@ -1,6 +1,6 @@
 #ifndef MQ_PREDICTORS_H
 #define MQ_PREDICTORS_H
-#include <stdlib>
+#include <stdlib.h>
 #include <fstream>
 #include <iostream>
 #include <vector>
