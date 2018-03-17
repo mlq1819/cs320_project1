@@ -11,6 +11,9 @@ int main(int argc, char *argv[]){
 	}
 	ifstream file();
 	file.open(argv[1]);
+	if(file.good()){
+		cout << "Bad input file" << endl;
+		return 0;
 	} else {
 		cout << "Reading " << argv[1] << endl;
 	}
