@@ -2,10 +2,6 @@
 
 using namespace std;
 
-double AlwaysTaken::percent(){
-	return ((double) this->correct)/this->total;
-}
-
 double AlwaysTaken::predict(ifstream file){
 	file.open();
 	string str;
@@ -18,10 +14,6 @@ double AlwaysTaken::predict(ifstream file){
 	return this->percent();
 }
 
-double NeverTaken::percent(){
-	return ((double) this->correct)/this->total;
-}
-
 double NeverTaken::predict(ifstream file){
 	file.open();
 	string str;
@@ -32,10 +24,6 @@ double NeverTaken::predict(ifstream file){
 	}
 	file.close();
 	return this->percent();
-}
-
-double singleBimodal::percent(){
-	return ((double) this->correct)/this->total;
 }
 
 double singleBimodal::predict(ifstream file){
@@ -54,10 +42,6 @@ double singleBimodal::predict(ifstream file){
 	}
 	file.close();
 	return this->percent();
-}
-
-double doubleBimodal::percent(){
-	return ((double) this->correct)/this->total;
 }
 
 double doubleBimodal::predict(ifstream file){
