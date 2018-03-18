@@ -29,7 +29,7 @@ template <class T>
 bool Node<T>::has(unsigned long address){
 	if(this->address==address)
 		return true;
-	if(address<this->address && this-left!=NULL)
+	if(address<this->address && this->left!=NULL)
 		return this->left->has(address);
 	if(address>this->address && this->right!=NULL)
 		return this->right->has(address);
@@ -40,11 +40,11 @@ template <class T>
 T Node<T>::get(unsigned long address){
 	if(this->address=address)
 		return this->data;
-	if(address<this->address && this-left!=NULL)
+	if(address<this->address && this->left!=NULL)
 		return this->left->get(address);
 	if(address>this->address && this->right!=NULL)
 		return this->right->get(address);
-	return T;
+	return T();
 }
 
 template <class T>
@@ -53,7 +53,7 @@ bool Node<T>::set(unsigned long address, T data){
 		this->data=data;
 		return true;
 	}
-	if(address<this->address && this-left!=NULL)
+	if(address<this->address && this->left!=NULL)
 		return this->left->set(address, data);
 	if(address>this->address && this->right!=NULL)
 		return this->right->set(address, data);
