@@ -40,7 +40,7 @@ double NeverTaken::predict(ifstream * file){
 double SingleBimodal::predict(ifstream * file){
 	char str[MAX_SIZE];
 	while(readTheLine(file,str)){
-		unsigned long index = stoul((string str).substr(2,8), nullptr, 16);
+		unsigned long index = stoul(string(str).substr(2,8), nullptr, 16);
 		bool num = this->history[index];
 		if(str[11]=='T' && num)
 			this->correct++;
@@ -56,7 +56,7 @@ double SingleBimodal::predict(ifstream * file){
 double DoubleBimodal::predict(ifstream * file){
 	char str[MAX_SIZE];
 	while(readTheLine(file,str)){
-		unsigned long index = stoul((string str).substr(2,8), nullptr, 16);
+		unsigned long index = stoul(string(str).substr(2,8), nullptr, 16);
 		int num = this->history[index];
 		if(str[11]=='T'){
 			if(num>1)
