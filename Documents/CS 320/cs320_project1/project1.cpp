@@ -22,7 +22,7 @@ int main(int argc, char *argv[]){
 		ifstream file;
 		file.open(name);
 	}
-	cout << "Reading " << argv[1] << endl;
+	cout << "Reading " << name << endl;
 	AlwaysTaken alwaysTaken = AlwaysTaken();
 	cout << "Always Taken: " << alwaysTaken.predict(&file) << endl;
 	file.seekg(0, ios_base::beg);
