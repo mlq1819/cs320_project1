@@ -3,6 +3,7 @@
 
 using namespace std;
 
+template <class T>
 void Node<T>::init(unsigned long address, T data, T def, unsigned long id){
 	this->id=id;
 	this->address = address;
