@@ -3,7 +3,7 @@
 
 using namespace std;
 
-bool readTheLine(ifstream * file, char[32]* str){
+bool readTheLine(ifstream * file, char[32] str){
 	int i=0;
 	while(i<MAX_SIZE){
 		char ch;
@@ -19,7 +19,7 @@ bool readTheLine(ifstream * file, char[32]* str){
 
 double AlwaysTaken::predict(ifstream * file){
 	char str[MAX_SIZE];
-	while(readTheLine(file,&str)){
+	while(readTheLine(file,str)){
 		if(str[11]=='T')
 			this->correct++;
 		this->total++;
@@ -29,7 +29,7 @@ double AlwaysTaken::predict(ifstream * file){
 
 double NeverTaken::predict(ifstream * file){
 	char str[MAX_SIZE];
-	while(readTheLine(file,&str)){
+	while(readTheLine(file,str)){
 		if(str[11]=='N')
 			this->correct++;
 		this->total++;
@@ -39,7 +39,7 @@ double NeverTaken::predict(ifstream * file){
 
 double SingleBimodal::predict(ifstream * file){
 	char str[MAX_SIZE];
-	while(readTheLine(file,&str)){
+	while(readTheLine(file,str)){
 		unsigned long index = stoul((string str).substr(2,8), nullptr, 16);
 		bool num = this->history[index];
 		if(str[11]=='T' && num)
@@ -55,7 +55,7 @@ double SingleBimodal::predict(ifstream * file){
 
 double DoubleBimodal::predict(ifstream * file){
 	char str[MAX_SIZE];
-	while(readTheLine(file,&str)){
+	while(readTheLine(file,str)){
 		unsigned long index = stoul((string str).substr(2,8), nullptr, 16);
 		int num = this->history[index];
 		if(str[11]=='T'){
