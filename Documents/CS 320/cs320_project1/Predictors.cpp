@@ -3,13 +3,13 @@
 
 using namespace std;
 
-bool readTheLine(ifstream * file, char[32] str){
+bool readTheLine(ifstream * file, char str[32]){
 	int i=0;
 	while(i<MAX_SIZE){
 		char ch;
 		*file >> ch;
 		if(ch!='\n')
-			(*str)[i++] = ch;
+			str[i++] = ch;
 		else break;
 	}
 	if(i!=MAX_SIZE)
