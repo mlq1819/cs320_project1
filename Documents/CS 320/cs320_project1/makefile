@@ -13,7 +13,11 @@ $(P).o: $(P).cpp $(Q).h
 $(Q).o: $(Q).cpp $(Q).h
 	g++ $(CFLAGS) -c $(Q).cpp -o $(Q).o
 
-
+clear:
+	clear
+	clear
+	make run
+	
 run: all
 	./$(P)
 
