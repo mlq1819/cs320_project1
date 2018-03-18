@@ -15,6 +15,7 @@ clear:
 	make run
 	
 run: all
+	rm st1_output.txt
 	./$(P) short_trace1.txt st1_output.txt
 
 checkmem:  all
