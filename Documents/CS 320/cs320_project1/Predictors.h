@@ -55,10 +55,9 @@ class SingleBimodal{
 		Node<bool>* history;
 		long correct;
 		long total;
-		int max_table_size;
-		int table_size;
+		long max_table_size;
 	public:
-		SingleBimodal(int);
+		SingleBimodal(long);
 		~SingleBimodal(){delete this->history; this->history=NULL;};
 		double percent(){return ((double) this->correct)/this->total * 100;};
 		double predict(std::ifstream*);
@@ -69,8 +68,9 @@ class DoubleBimodal{
 		Node<int>* history;
 		long correct;
 		long total;
+		long max_table_size;
 	public:
-		DoubleBimodal(){this->correct=this->total=0;this->history=NULL;};
+		DoubleBimodal(long);
 		~DoubleBimodal(){delete this->history; this->history=NULL;};
 		double percent(){return ((double) this->correct)/this->total * 100;};
 		double predict(std::ifstream*);

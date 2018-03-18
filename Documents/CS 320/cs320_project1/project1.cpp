@@ -37,13 +37,73 @@ int main(int argc, char *argv[]){
 		file.clear();
 		file.seekg(0, ios_base::beg);
 		
-		SingleBimodal singleBimodal = SingleBimodal();
-		cout << "Single Bimodal: " << singleBimodal.predict(&file) << "% Accurate" << endl;
+		SingleBimodal singleBimodal = SingleBimodal(16);
+		cout << "Single Bimodal 16: " << singleBimodal.predict(&file) << "% Accurate" << endl;
 		file.clear();
 		file.seekg(0, ios_base::beg);
 		
-		DoubleBimodal doubleBimodal = DoubleBimodal();
-		cout << "Double Bimodal: " << doubleBimodal.predict(&file) << "% Accurate" << endl;
+		singleBimodal = SingleBimodal(32);
+		cout << "Single Bimodal 32: " << singleBimodal.predict(&file) << "% Accurate" << endl;
+		file.clear();
+		file.seekg(0, ios_base::beg);
+		
+		singleBimodal = SingleBimodal(128);
+		cout << "Single Bimodal 128: " << singleBimodal.predict(&file) << "% Accurate" << endl;
+		file.clear();
+		file.seekg(0, ios_base::beg);
+		
+		singleBimodal = SingleBimodal(256);
+		cout << "Single Bimodal 256: " << singleBimodal.predict(&file) << "% Accurate" << endl;
+		file.clear();
+		file.seekg(0, ios_base::beg);
+		
+		singleBimodal = SingleBimodal(512);
+		cout << "Single Bimodal 512: " << singleBimodal.predict(&file) << "% Accurate" << endl;
+		file.clear();
+		file.seekg(0, ios_base::beg);
+		
+		singleBimodal = SingleBimodal(1024);
+		cout << "Single Bimodal 1024: " << singleBimodal.predict(&file) << "% Accurate" << endl;
+		file.clear();
+		file.seekg(0, ios_base::beg);
+		
+		singleBimodal = SingleBimodal(2048);
+		cout << "Single Bimodal 2048: " << singleBimodal.predict(&file) << "% Accurate" << endl;
+		file.clear();
+		file.seekg(0, ios_base::beg);
+		
+		DoubleBimodal doubleBimodal = DoubleBimodal(16);
+		cout << "Double Bimodal 16: " << doubleBimodal.predict(&file) << "% Accurate" << endl;
+		file.clear();
+		file.seekg(0, ios_base::beg);
+		
+		doubleBimodal = DoubleBimodal(32);
+		cout << "Double Bimodal 32: " << doubleBimodal.predict(&file) << "% Accurate" << endl;
+		file.clear();
+		file.seekg(0, ios_base::beg);
+		
+		doubleBimodal = DoubleBimodal(128);
+		cout << "Double Bimodal 128: " << doubleBimodal.predict(&file) << "% Accurate" << endl;
+		file.clear();
+		file.seekg(0, ios_base::beg);
+		
+		doubleBimodal = DoubleBimodal(256);
+		cout << "Double Bimodal 256: " << doubleBimodal.predict(&file) << "% Accurate" << endl;
+		file.clear();
+		file.seekg(0, ios_base::beg);
+		
+		doubleBimodal = DoubleBimodal(512);
+		cout << "Double Bimodal 512: " << doubleBimodal.predict(&file) << "% Accurate" << endl;
+		file.clear();
+		file.seekg(0, ios_base::beg);
+		
+		doubleBimodal = DoubleBimodal(1024);
+		cout << "Double Bimodal 1024: " << doubleBimodal.predict(&file) << "% Accurate" << endl;
+		file.clear();
+		file.seekg(0, ios_base::beg);
+		
+		doubleBimodal = DoubleBimodal(2048);
+		cout << "Double Bimodal 2048: " << doubleBimodal.predict(&file) << "% Accurate" << endl;
 		file.clear();
 		file.seekg(0, ios_base::beg);
 		

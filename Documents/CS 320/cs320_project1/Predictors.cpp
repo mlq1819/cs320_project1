@@ -32,7 +32,7 @@ Node * Node<T>::replaceRoot(){
 	Node * newRoot = this->next;
 	this->next=NULL;
 	delete this;
-	reutnr newRoot;
+	return newRoot;
 }
 
 template <class T>
@@ -47,13 +47,10 @@ bool Node<T>::add(unsigned long address, T data){
 
 template <class T>
 bool Node<T>::add(unsigned long address, T data, T def){
-	if(address==this->address)
-		return false;
-	if(this->next!=NULL){
-		this->id++;
-		return this->next(add(address, data, def));
-	}
-	this->next=new Node(address, data, def, this->id++);
+	this->id++;
+	if(this->next!=NULL)
+		return this->next->add(address, data, def);
+	this->next=new Node(address, data, def, this->id-1);
 	return true;
 }
 
@@ -106,8 +103,8 @@ double NeverTaken::predict(ifstream * file){
 	return this->percent();
 }
 
-SingleBimodal::SingleBimodal::predict(int max_table_size){
-	this->correct=this->total=this->table_size=0;
+SingleBimodal::SingleBimodal(long max_table_size){
+	this->correct=this->total=0;
 	this->history=NULL;
 	this->max_table_size=max_table_size;
 }
@@ -119,8 +116,11 @@ double SingleBimodal::predict(ifstream * file){
 		unsigned long address = stol(str.substr(2,8), 0, 16);
 		if(this->history==NULL)
 			this->history=new Node<bool>(address, false);
-		if(!this->history->has(address))
+		if(!this->history->has(address)){
 			this->history->add(address);
+			if(this->history->getID()>=this->max_table_size)
+				this->history=this->history->replaceRoot();
+		}
 		bool data = this->history->get(address);
 		if(str[11]=='T' && data)
 			this->correct++;
@@ -132,6 +132,12 @@ double SingleBimodal::predict(ifstream * file){
 	return this->percent();
 }
 
+DoubleBimodal::DoubleBimodal(long max_table_size){
+	this->correct=this->total=0;
+	this->history=NULL;
+	this->max_table_size=max_table_size;
+}
+
 double DoubleBimodal::predict(ifstream * file){
 	string str;
 	while(getline(*file, str)){
@@ -139,8 +145,11 @@ double DoubleBimodal::predict(ifstream * file){
 		unsigned long address = stol(str.substr(2,8), 0, 16);
 		if(this->history==NULL)
 			this->history=new Node<int>(address, 0);
-		if(!this->history->has(address))
+		if(!this->history->has(address)){
 			this->history->add(address);
+			if(this->history->getID()>=this->max_table_size)
+				this->history=this->history->replaceRoot();
+		}
 		int data = this->history->get(address);
 		if(str[11]=='T'){
 			if(data>1)
