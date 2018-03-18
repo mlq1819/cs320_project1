@@ -4,21 +4,61 @@
 using namespace std;
 
 template <class T>
+Node<T>::Node(unsigned long address, T data, T def){
+	this->address = address;
+	this->data = data;
+	this->def = def;
+}
+
+template <class T>
 Node<T>::Node(unsigned long address, T data){
 	this->address = address;
 	this->data = data;
+	this->def = data;
+}
+
+template <class T>
+bool Node<T>::add(unsigned long address){
+	if(address<this->address){
+		if(this->left==NULL)
+			this->left = new Node(address, this->def);
+		else
+			return this->left->add(address, data);
+	} else if(address>this->address){
+		if(this->right==NULL)
+			this->right = new Node(address, this->def);
+		else
+			return this->right->add(address, data);
+	}
+	return false;
 }
 
 template <class T>
 bool Node<T>::add(unsigned long address, T data){
 	if(address<this->address){
 		if(this->left==NULL)
-			this->left = new Node(address, data);
+			this->left = new Node(address, data, this->def);
 		else
 			return this->left->add(address, data);
 	} else if(address>this->address){
 		if(this->right==NULL)
-			this->right = new Node(address, data);
+			this->right = new Node(address, data, this->def);
+		else
+			return this->right->add(address, data);
+	}
+	return false;
+}
+
+template <class T>
+bool Node<T>::add(unsigned long address, T data, T def){
+	if(address<this->address){
+		if(this->left==NULL)
+			this->left = new Node(address, data, def);
+		else
+			return this->left->add(address, data);
+	} else if(address>this->address){
+		if(this->right==NULL)
+			this->right = new Node(address, data, def);
 		else
 			return this->right->add(address, data);
 	}
@@ -88,7 +128,7 @@ double SingleBimodal::predict(ifstream * file){
 		if(this->history==NULL)
 			this->history=new Node<bool>(address, false);
 		if(!this->history->has(address))
-			this->history->add(address, false);
+			this->history->add(address);
 		bool data = this->history->get(address);
 		if(str[11]=='T' && data)
 			this->correct++;
@@ -108,7 +148,7 @@ double DoubleBimodal::predict(ifstream * file){
 		if(this->history==NULL)
 			this->history=new Node<int>(address, 0);
 		if(!this->history->has(address))
-			this->history->add(address, 0);
+			this->history->add(address);
 		int data = this->history->get(address);
 		if(str[11]=='T'){
 			if(data>1)

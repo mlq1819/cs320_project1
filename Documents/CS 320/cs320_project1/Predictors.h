@@ -12,11 +12,15 @@ class Node{
 		Node * left;
 		Node * right;
 		unsigned long address;
+		T def;
 		T data;
 	public:
+		Node(unsigned long, T, T);
 		Node(unsigned long, T);
 		~Node(){delete left; delete right; left=right=NULL;};
+		bool add(unsigned long);
 		bool add(unsigned long, T);
+		bool add(unsigned long, T, T);
 		bool has(unsigned long);
 		T get(unsigned long);
 		bool set(unsigned long, T);
