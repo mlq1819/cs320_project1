@@ -21,7 +21,7 @@ double AlwaysTaken::predict(ifstream * file){
 	cout << "called predict" << endl;
 	char str[MAX_SIZE];
 	long lineNum = 1;
-	while(readTheLine(file,str)){
+	while(getline(str, MAX_SIZE, '\n'){
 		cout << lineNum++ << " : " << str << endl;
 		if(str[11]=='T')
 			this->correct++;
