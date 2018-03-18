@@ -3,7 +3,7 @@
 using namespace std;
 
 double AlwaysTaken::predict(ifstream * file){
-	string str;
+	string str="";
 	while(file->getline(str.c_str(), 32)){
 		if(str[11]=='T')
 			this->correct++;
@@ -13,7 +13,7 @@ double AlwaysTaken::predict(ifstream * file){
 }
 
 double NeverTaken::predict(ifstream * file){
-	string str;
+	string str="";
 	while(file->getline(str.c_str(), 32)){
 		if(str[11]=='N')
 			this->correct++;
@@ -23,7 +23,7 @@ double NeverTaken::predict(ifstream * file){
 }
 
 double SingleBimodal::predict(ifstream * file){
-	string str;
+	string str="";
 	while(file->getline(str.c_str(), 32)){
 		unsigned long index = stoul(str.substr(2,8), nullptr, 16);
 		bool num = this->history[index];
@@ -39,7 +39,7 @@ double SingleBimodal::predict(ifstream * file){
 }
 
 double DoubleBimodal::predict(ifstream * file){
-	string str;
+	string str="";
 	while(file->getline(str.c_str(), 32)){
 		unsigned long index = stoul(str.substr(2,8), nullptr, 16);
 		int num = this->history[index];
