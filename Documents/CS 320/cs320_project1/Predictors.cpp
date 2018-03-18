@@ -4,7 +4,7 @@
 using namespace std;
 
 template <class T>
-void Node<T>::init(unsigned long address, T data, T def, unsigned long id){
+void Node<T>::init(unsigned long address, T data, T def, long id){
 	this->id=id;
 	this->address = address;
 	this->data = data;
@@ -13,7 +13,7 @@ void Node<T>::init(unsigned long address, T data, T def, unsigned long id){
 }
 
 template <class T>
-Node<T>::Node(unsigned long address, T data, T def, unsigned long id){
+Node<T>::Node(unsigned long address, T data, T def, long id){
 	init(address, data, def, id);
 }
 
@@ -29,7 +29,7 @@ Node<T>::Node(unsigned long address, T data){
 }
 
 template <class T>
-Node * Node<T>::replaceRoot(){
+Node<T> * Node<T>::replaceRoot(){
 	Node * newRoot = this->next;
 	this->next=NULL;
 	delete this;

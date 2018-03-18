@@ -10,12 +10,12 @@ template <class T>
 class Node{
 	private:
 		Node * next;
-		unsigned long id;
+		long id;
 		unsigned long address;
 		T def;
 		T data;
-		void init(unsigned long, T, T, unsigned long);
-		Node(unsigned long, T, T, unsigned long);
+		void init(unsigned long, T, T, long);
+		Node(unsigned long, T, T, long);
 	public:
 		Node(unsigned long, T, T);
 		Node(unsigned long, T);
@@ -27,7 +27,7 @@ class Node{
 		bool has(unsigned long);
 		T get(unsigned long);
 		bool set(unsigned long, T);
-		unsigned long getID(){return this->id;};
+		long getID(){return this->id;};
 };
 
 class AlwaysTaken{
