@@ -78,7 +78,7 @@ bool Node<T>::has(unsigned long address){
 
 template <class T>
 T Node<T>::get(unsigned long address){
-	if(this->address=address)
+	if(this->address==address)
 		return this->data;
 	if(address<this->address && this->left!=NULL)
 		return this->left->get(address);
@@ -89,7 +89,7 @@ T Node<T>::get(unsigned long address){
 
 template <class T>
 bool Node<T>::set(unsigned long address, T data){
-	if(this->address=address){
+	if(this->address==address){
 		this->data=data;
 		return true;
 	}
