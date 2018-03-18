@@ -1,6 +1,6 @@
 #include "Predictors.h"
 #define MAX_SIZE 32
-#define OUTPUT false;
+#define OUTPUT false
 
 using namespace std;
 
