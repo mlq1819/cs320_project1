@@ -6,15 +6,21 @@
 using namespace std;
 
 int main(int argc, char *argv[]){
-	if(argc<2){
+	/*if(argc<2){
 		cout << "Not enough arguments" << endl;
 		return 0;
-	}
+	}*/
+	cout << "Enter file: ";
+	string name;
+	cin >> name;
+	
 	ifstream file;
-	file.open(argv[1]);
-	if(!file || !file.good()){
-		cout << "Bad input file" << endl;
-		return 0;
+	file.open(name);
+	while(!file || !file.good()){
+		cout << "Bad input file\nEnter file: ";
+		cin >> name;
+		ifstream file;
+		file.open(name);
 	}
 	cout << "Reading " << argv[1] << endl;
 	AlwaysTaken alwaysTaken = AlwaysTaken();
