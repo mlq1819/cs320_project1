@@ -27,7 +27,9 @@ double SingleBimodal::predict(ifstream * file){
 	string str;
 	while(getline(*file, str)){
 		this->total++;
+		cout << "test1" << endl;
 		unsigned long index = stoi(str.substr(2,8), 0, 16);
+		cout << "test2" << endl;
 		bool num = this->history[index];
 		if(str[11]=='T' && num)
 			this->correct++;
@@ -35,6 +37,7 @@ double SingleBimodal::predict(ifstream * file){
 			this->correct++;
 		else
 			this->history[index]=!num;
+		cout << "test3" << endl;
 	}
 	return this->percent();
 }
