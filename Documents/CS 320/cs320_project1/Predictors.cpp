@@ -27,7 +27,8 @@ double SingleBimodal::predict(ifstream * file){
 	string str;
 	while(getline(*file, str)){
 		this->total++;
-		unsigned long index = stoul(str.substr(2,8), nullptr, 16);
+		unsigned long index;
+		str.substr(2,8) >> hex >> index;
 		bool num = this->history[index];
 		if(str[11]=='T' && num)
 			this->correct++;
@@ -43,7 +44,8 @@ double DoubleBimodal::predict(ifstream * file){
 	string str;
 	while(getline(*file, str)){
 		this->total++;
-		unsigned long index = stoul(str.substr(2,8), nullptr, 16);
+		unsigned long index;
+		str.substr(2,8) >> hex >> index;
 		int num = this->history[index];
 		if(str[11]=='T'){
 			if(num>1)
