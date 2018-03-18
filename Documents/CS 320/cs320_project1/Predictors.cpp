@@ -27,10 +27,10 @@ double SingleBimodal::predict(ifstream * file){
 	string str;
 	while(getline(*file, str)){
 		this->total++;
-		cout << "test1" << endl;
 		unsigned long index = stoi(str.substr(2,8), 0, 16);
-		cout << "test2" << endl;
+		cout << "test1" << endl;
 		bool num = this->history[index];
+		cout << "test2" << endl;
 		if(str[11]=='T' && num)
 			this->correct++;
 		else if(str[11]=='N' && !num)
