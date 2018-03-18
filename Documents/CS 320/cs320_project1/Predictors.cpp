@@ -3,11 +3,13 @@
 
 using namespace std;
 
+template <class T>
 Node<T>::Node(unsigned long address, T data){
 	this->address = address;
 	this->data = data;
 }
 
+template <class T>
 bool Node<T>::add(unsigned long address, T data){
 	if(address<this->address){
 		if(this->left==NULL)
@@ -23,6 +25,7 @@ bool Node<T>::add(unsigned long address, T data){
 	return false;
 }
 
+template <class T>
 bool Node<T>::has(unsigned long address){
 	if(this->address==address)
 		return true;
@@ -33,6 +36,7 @@ bool Node<T>::has(unsigned long address){
 	return false;
 }
 
+template <class T>
 T Node<T>::get(unsigned long address){
 	if(this->address=address)
 		return this->data;
@@ -43,6 +47,7 @@ T Node<T>::get(unsigned long address){
 	return T;
 }
 
+template <class T>
 bool Node<T>::set(unsigned long address, T data){
 	if(this->address=address){
 		this->data=data;
