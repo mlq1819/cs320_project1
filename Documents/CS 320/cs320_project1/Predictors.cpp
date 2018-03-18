@@ -166,6 +166,81 @@ int main(int argc, char *argv[]){
 	file.clear();
 	file.seekg(0, ios_base::beg);
 	
+	
+	
+	GShare gshare = GShare(3);
+	cout << "GShare 3: \t" << endl;
+	cout << ghsare.predict(&file) << "% Accurate" << endl;
+	if(OUTPUT)
+		output << gshare.getCorrect() << "," << gshare.getTotal() << "; ";
+	file.clear();
+	file.seekg(0, ios_base::beg);
+	
+	gshare = GShare(4);
+	cout << "GShare 4: \t" << endl;
+	cout << ghsare.predict(&file) << "% Accurate" << endl;
+	if(OUTPUT)
+		output << gshare.getCorrect() << "," << gshare.getTotal() << "; ";
+	file.clear();
+	file.seekg(0, ios_base::beg);
+	
+	gshare = GShare(5);
+	cout << "GShare 5: \t" << endl;
+	cout << ghsare.predict(&file) << "% Accurate" << endl;
+	if(OUTPUT)
+		output << gshare.getCorrect() << "," << gshare.getTotal() << "; ";
+	file.clear();
+	file.seekg(0, ios_base::beg);
+	
+	gshare = GShare(6);
+	cout << "GShare 6: \t" << endl;
+	cout << ghsare.predict(&file) << "% Accurate" << endl;
+	if(OUTPUT)
+		output << gshare.getCorrect() << "," << gshare.getTotal() << "; ";
+	file.clear();
+	file.seekg(0, ios_base::beg);
+	
+	gshare = GShare(7);
+	cout << "GShare 7: \t" << endl;
+	cout << ghsare.predict(&file) << "% Accurate" << endl;
+	if(OUTPUT)
+		output << gshare.getCorrect() << "," << gshare.getTotal() << "; ";
+	file.clear();
+	file.seekg(0, ios_base::beg);
+	
+	gshare = GShare(8);
+	cout << "GShare 8: \t" << endl;
+	cout << ghsare.predict(&file) << "% Accurate" << endl;
+	if(OUTPUT)
+		output << gshare.getCorrect() << "," << gshare.getTotal() << "; ";
+	file.clear();
+	file.seekg(0, ios_base::beg);
+	
+	gshare = GShare(9);
+	cout << "GShare 9: \t" << endl;
+	cout << ghsare.predict(&file) << "% Accurate" << endl;
+	if(OUTPUT)
+		output << gshare.getCorrect() << "," << gshare.getTotal() << "; ";
+	file.clear();
+	file.seekg(0, ios_base::beg);
+	
+	gshare = GShare(10);
+	cout << "GShare 10: \t" << endl;
+	cout << ghsare.predict(&file) << "% Accurate" << endl;
+	if(OUTPUT)
+		output << gshare.getCorrect() << "," << gshare.getTotal() << "; ";
+	file.clear();
+	file.seekg(0, ios_base::beg);
+	
+	gshare = GShare(11);
+	cout << "GShare 11: \t" << endl;
+	cout << ghsare.predict(&file) << "% Accurate" << endl;
+	if(OUTPUT)
+		output << gshare.getCorrect() << "," << gshare.getTotal() << "; ";
+	file.clear();
+	file.seekg(0, ios_base::beg);
+	
+	
 	if(file.is_open())
 		file.close();
 	return 0;
@@ -318,34 +393,44 @@ DoubleBimodal::DoubleBimodal(long max_table_size){
 double DoubleBimodal::predict(ifstream * file){
 	string str;
 	while(getline(*file, str)){
-		this->total++;
-		unsigned long address = stol(str.substr(2,8), 0, 16);
-		if(this->history==NULL)
-			this->history=new Node<int>(address, 3);
-		if(!this->history->has(address)){
-			this->history->add(address);
-			if(this->history->getID()>=this->max_table_size)
-				this->history=this->history->replaceRoot();
-		}
-		int data = this->history->get(address);
-		int i=0;
-		while(str[i]!=' ')
-			i++;
-		i++;
-		if(str[i]=='T'){
-			if(data>1)
-				this->correct++;
-			if(data<3)
-				this->history->set(address, data+1);
-		}
-		else if(str[11]=='N'){
-			if(data<2)
-				this->correct++;
-			if(data>0)
-				this->history->set(address, data-1);
-		}
+		this->predictOne(str);
 	}
 	return this->percent();
+}
+
+bool DoubleBimodal::predictOne(string str){
+	this->total++;
+	bool toReturn=true;
+	unsigned long address = stol(str.substr(2,8), 0, 16);
+	if(this->history==NULL)
+		this->history=new Node<int>(address, 3);
+	if(!this->history->has(address)){
+		this->history->add(address);
+		if(this->history->getID()>=this->max_table_size)
+			this->history=this->history->replaceRoot();
+	}
+	int data = this->history->get(address);
+	int i=0;
+	while(str[i]!=' ')
+		i++;
+	i++;
+	if(str[i]=='T'){
+		if(data>1)
+			this->correct++;
+		else
+			toReturn=false;
+		if(data<3)
+			this->history->set(address, data+1);
+	}
+	else if(str[11]=='N'){
+		if(data<2)
+			this->correct++;
+		else
+			toReturn=false;
+		if(data>0)
+			this->history->set(address, data-1);
+	}
+	return toReturn;
 }
 
 GShare::GShare(int global_history_bits){
@@ -357,9 +442,61 @@ GShare::GShare(int global_history_bits){
 double GShare::predict(ifstream * file){
 	string str;
 	while(getline(*file, str)){
+		this->predictOne(str);
+	}
+	return this->percent();
+}
+
+bool GShare::predictOne(string str){
+	this->total++;
+	bool toReturn = true;
+	unsigned long address = stol(str.substr(2,8), 0, 16);
+	address = address ^ this->global_history_bits;
+	if(this->history==NULL)
+		this->history=new Node<int>(address, 3);
+	if(!this->history->has(address)){
+		this->history->add(address);
+		if(this->history->getID()>=this->max_table_size)
+			this->history=this->history->replaceRoot();
+	}
+	int data = this->history->get(address);
+	int i=0;
+	this->global_history_bits = this->global_history_bits << 1;
+	while(str[i]!=' ')
+		i++;
+	i++;
+	if(str[i]=='T'){
+		this->global_history_bits++;
+		if(data>1)
+			this->correct++;
+		else
+			toReturn=false;
+		if(data<3)
+			this->history->set(address, data+1);
+	}
+	else if(str[11]=='N'){
+		if(data<2)
+			this->correct++;
+		else
+			toReturn=false;
+		if(data>0)
+			this->history->set(address, data-1);
+	}
+	return toReturn;
+}
+
+Tournament::Tournament(){
+	this->bimodal = DoubleBimodal(2048);
+	this->gshare = GShare(11);
+	this->history=NULL;
+	this->correct=this->total=0;
+}
+
+double Tournament::predict(ifstream * file){
+	string str;
+	while(getline(*file, str)){
 		this->total++;
 		unsigned long address = stol(str.substr(2,8), 0, 16);
-		address = address ^ this->global_history_bits;
 		if(this->history==NULL)
 			this->history=new Node<int>(address, 3);
 		if(!this->history->has(address)){
@@ -368,26 +505,39 @@ double GShare::predict(ifstream * file){
 				this->history=this->history->replaceRoot();
 		}
 		int data = this->history->get(address);
+		bool bimodal=this->bimodal.predictOne(str);
+		bool gshare=this->gshare.predictOne(str);
+		bool picked = true;
+		bool not_picked = true;
+		if(data>1){
+			picked = gshare;
+			not_picked = bimodal
+		}
+		else{
+			picked = bimodal;
+			not_picked = gshare;
+		}
 		int i=0;
-		this->global_history_bits = this->global_history_bits << 1;
 		while(str[i]!=' ')
 			i++;
 		i++;
-		if(str[i]=='T'){
-			this->global_history_bits++;
-			if(data>1)
-				this->correct++;
-			if(data<3)
-				this->history->set(address, data+1);
+		if((str[i]=='T' && picked) || (str[i]!='T' && !picked)){
+			this->correct++;
+			if(picked^not_picked){
+				if(data<3 && data>1)
+					this->history->set(address, data+1);
+				else if(data>0 && data<2)
+					this->history->set(address, data-1);
+			}
+		} else {
+			if(picked^not_picked){
+				if(data>1)
+					this->history->set(address, data-1);
+				else
+					this->history->set(address, data+1);
+			}
 		}
-		else if(str[11]=='N'){
-			if(data<2)
-				this->correct++;
-			if(data>0)
-				this->history->set(address, data-1);
-		}
-	}
-	return this->percent();
+		
 	}
 	return this->percent();
 }
