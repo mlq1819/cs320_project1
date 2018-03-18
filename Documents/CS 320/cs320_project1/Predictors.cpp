@@ -19,9 +19,9 @@ bool readTheLine(ifstream * file, char str[32]){
 
 double AlwaysTaken::predict(ifstream * file){
 	cout << "called predict" << endl;
-	char str[MAX_SIZE];
+	string str;
 	long lineNum = 1;
-	while(getline(str, MAX_SIZE, '\n'){
+	while(getline(*file, str)){
 		cout << lineNum++ << " : " << str << endl;
 		if(str[11]=='T')
 			this->correct++;
