@@ -284,7 +284,7 @@ double SingleBimodal::predict(ifstream * file){
 		this->total++;
 		unsigned long address = stol(str.substr(2,8), 0, 16);
 		if(this->history==NULL)
-			this->history=new Node<bool>(address, false);
+			this->history=new Node<bool>(address, true);
 		if(!this->history->has(address)){
 			this->history->add(address);
 			if(this->history->getID()>=this->max_table_size)
@@ -321,7 +321,7 @@ double DoubleBimodal::predict(ifstream * file){
 		this->total++;
 		unsigned long address = stol(str.substr(2,8), 0, 16);
 		if(this->history==NULL)
-			this->history=new Node<int>(address, 0);
+			this->history=new Node<int>(address, 3);
 		if(!this->history->has(address)){
 			this->history->add(address);
 			if(this->history->getID()>=this->max_table_size)
@@ -344,6 +344,50 @@ double DoubleBimodal::predict(ifstream * file){
 			if(data>0)
 				this->history->set(address, data-1);
 		}
+	}
+	return this->percent();
+}
+
+GShare::GShare(int global_history_bits){
+	this->correct=this->total=0; 
+	this->global_history_bits=global_history_bits; 
+	this->history=NULL;
+}
+
+double GShare::predict(ifstream * file){
+	string str;
+	while(getline(*file, str)){
+		this->total++;
+		unsigned long address = stol(str.substr(2,8), 0, 16);
+		address = address ^ this->global_history_bits;
+		if(this->history==NULL)
+			this->history=new Node<int>(address, 3);
+		if(!this->history->has(address)){
+			this->history->add(address);
+			if(this->history->getID()>=this->max_table_size)
+				this->history=this->history->replaceRoot();
+		}
+		int data = this->history->get(address);
+		int i=0;
+		this->global_history_bits = this->global_history_bits << 1;
+		while(str[i]!=' ')
+			i++;
+		i++;
+		if(str[i]=='T'){
+			this->global_history_bits++;
+			if(data>1)
+				this->correct++;
+			if(data<3)
+				this->history->set(address, data+1);
+		}
+		else if(str[11]=='N'){
+			if(data<2)
+				this->correct++;
+			if(data>0)
+				this->history->set(address, data-1);
+		}
+	}
+	return this->percent();
 	}
 	return this->percent();
 }

@@ -84,4 +84,20 @@ class DoubleBimodal{
 		long getTotal(){return this->total;};
 };
 
+class GShare{
+	private:
+		Node<int>* history;
+		long correct;
+		long total;
+		long max_table_size = 2048;
+		int global_history_bits;
+	public:
+		GShare(int);
+		~GShare(){delete this->history; this->history=NULL;};
+		double percent(){return ((double) this->correct)/this->total * 100;};
+		double predict(std::ifstream*);
+		long getCorrect(){return this->correct;};
+		long getTotal(){return this->total;};
+};
+
 #endif
