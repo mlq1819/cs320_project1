@@ -9,21 +9,25 @@
 template <class T>
 class Node{
 	private:
-		Node * left;
-		Node * right;
+		Node * next;
+		unsigned long id;
 		unsigned long address;
 		T def;
 		T data;
+		void init(unsigned long, T, T, unsigned long);
+		Node(unsigned long, T, T, unsigned long);
 	public:
 		Node(unsigned long, T, T);
 		Node(unsigned long, T);
 		~Node(){delete left; delete right; left=right=NULL;};
+		Node * replaceRoot();
 		bool add(unsigned long);
 		bool add(unsigned long, T);
 		bool add(unsigned long, T, T);
 		bool has(unsigned long);
 		T get(unsigned long);
 		bool set(unsigned long, T);
+		unsigned long getID(){return this->id;};
 };
 
 class AlwaysTaken{
@@ -51,8 +55,10 @@ class SingleBimodal{
 		Node<bool>* history;
 		long correct;
 		long total;
+		int max_table_size;
+		int table_size;
 	public:
-		SingleBimodal(){this->correct=this->total=0;this->history=NULL;};
+		SingleBimodal(int);
 		~SingleBimodal(){delete this->history; this->history=NULL;};
 		double percent(){return ((double) this->correct)/this->total * 100;};
 		double predict(std::ifstream*);

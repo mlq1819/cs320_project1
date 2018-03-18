@@ -3,78 +3,66 @@
 
 using namespace std;
 
-template <class T>
-Node<T>::Node(unsigned long address, T data, T def){
+void Node<T>::init(unsigned long address, T data, T def, unsigned long id){
+	this->id=id;
 	this->address = address;
 	this->data = data;
 	this->def = def;
-	this->left=this->right=NULL;
+	this->next=NULL;
+}
+
+template <class T>
+Node<T>::Node(unsigned long address, T data, T def, unsigned long id){
+	init(address, data, def, id);
+}
+
+template <class T>
+Node<T>::Node(unsigned long address, T data, T def){
+	init(address, data, def, 0);
+	
 }
 
 template <class T>
 Node<T>::Node(unsigned long address, T data){
-	this->address = address;
-	this->data = data;
-	this->def = data;
-	this->left=this->right=NULL;
+	init(address, data, data, 0);
+}
+
+template <class T>
+Node * Node<T>::replaceRoot(){
+	Node * newRoot = this->next;
+	this->next=NULL;
+	delete this;
+	reutnr newRoot;
 }
 
 template <class T>
 bool Node<T>::add(unsigned long address){
-	if(address<this->address){
-		if(this->left==NULL)
-			this->left = new Node(address, this->def);
-		else
-			return this->left->add(address, data);
-	} else if(address>this->address){
-		if(this->right==NULL)
-			this->right = new Node(address, this->def);
-		else
-			return this->right->add(address, data);
-	}
-	return false;
+	return this->add(address, this->def, this->def);
 }
 
 template <class T>
 bool Node<T>::add(unsigned long address, T data){
-	if(address<this->address){
-		if(this->left==NULL)
-			this->left = new Node(address, data, this->def);
-		else
-			return this->left->add(address, data);
-	} else if(address>this->address){
-		if(this->right==NULL)
-			this->right = new Node(address, data, this->def);
-		else
-			return this->right->add(address, data);
-	}
-	return false;
+	return this->add(address, data, this->def);
 }
 
 template <class T>
 bool Node<T>::add(unsigned long address, T data, T def){
-	if(address<this->address){
-		if(this->left==NULL)
-			this->left = new Node(address, data, def);
-		else
-			return this->left->add(address, data);
-	} else if(address>this->address){
-		if(this->right==NULL)
-			this->right = new Node(address, data, def);
-		else
-			return this->right->add(address, data);
+	if(address==this->address)
+		return false;
+	if(this->next!=NULL){
+		this->id++;
+		return this->next(add(address, data, def));
 	}
-	return false;
+	this->next=new Node(address, data, def, this->id++);
+	return true;
 }
 
 template <class T>
 bool Node<T>::has(unsigned long address){
 	if(this->address==address)
 		return true;
-	if(address<this->address && this->left!=NULL)
-		return this->left->has(address);
-	if(address>this->address && this->right!=NULL)
-		return this->right->has(address);
+	if(this->next!=NULL)
+		return this->next->has(address);
 	return false;
 }
 
@@ -82,11 +70,9 @@ template <class T>
 T Node<T>::get(unsigned long address){
 	if(this->address==address)
 		return this->data;
-	if(address<this->address && this->left!=NULL)
-		return this->left->get(address);
-	if(address>this->address && this->right!=NULL)
-		return this->right->get(address);
-	return T();
+	if(this->next!=NULL)
+		return this->next->get(address);
+	return this->def;
 }
 
 template <class T>
@@ -95,10 +81,8 @@ bool Node<T>::set(unsigned long address, T data){
 		this->data=data;
 		return true;
 	}
-	if(address<this->address && this->left!=NULL)
-		return this->left->set(address, data);
-	if(address>this->address && this->right!=NULL)
-		return this->right->set(address, data);
+	if(this->next!=NULL)
+		return this->next->set(address, data);
 	return false;
 }
 
@@ -120,6 +104,12 @@ double NeverTaken::predict(ifstream * file){
 			this->correct++;
 	}
 	return this->percent();
+}
+
+SingleBimodal::SingleBimodal::predict(int max_table_size){
+	this->correct=this->total=this->table_size=0;
+	this->history=NULL;
+	this->max_table_size=max_table_size;
 }
 
 double SingleBimodal::predict(ifstream * file){
