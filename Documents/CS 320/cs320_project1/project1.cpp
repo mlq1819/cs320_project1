@@ -28,22 +28,22 @@ int main(int argc, char *argv[]){
 		}
 		cout << "Reading " << name << endl;
 		AlwaysTaken alwaysTaken = AlwaysTaken();
-		cout << "Always Taken: " << alwaysTaken.predict(&file) << endl;
+		cout << "Always Taken: " << alwaysTaken.predict(&file) << "% Accurate" << endl;
 		file.clear();
 		file.seekg(0, ios_base::beg);
 		
 		NeverTaken neverTaken = NeverTaken();
-		cout << "Never Taken: " << neverTaken.predict(&file) << endl;
+		cout << "Never Taken: " << neverTaken.predict(&file) << "% Accurate" << endl;
 		file.clear();
 		file.seekg(0, ios_base::beg);
 		
 		SingleBimodal singleBimodal = SingleBimodal();
-		cout << "Single Bimodal: " << singleBimodal.predict(&file) << endl;
+		cout << "Single Bimodal: " << singleBimodal.predict(&file) << "% Accurate" << endl;
 		file.clear();
 		file.seekg(0, ios_base::beg);
 		
 		DoubleBimodal doubleBimodal = DoubleBimodal();
-		cout << "Double Bimodal: " << doubleBimodal.predict(&file) << endl;
+		cout << "Double Bimodal: " << doubleBimodal.predict(&file) << "% Accurate" << endl;
 		file.clear();
 		file.seekg(0, ios_base::beg);
 		
