@@ -124,7 +124,7 @@ double SingleBimodal::predict(ifstream * file){
 	string str;
 	while(getline(*file, str)){
 		this->total++;
-		unsigned long address = stoi(str.substr(2,8), 0, 16);
+		unsigned long address = stol(str.substr(2,8), 0, 16);
 		if(this->history==NULL)
 			this->history=new Node<bool>(address, false);
 		if(!this->history->has(address))
@@ -144,7 +144,7 @@ double DoubleBimodal::predict(ifstream * file){
 	string str;
 	while(getline(*file, str)){
 		this->total++;
-		unsigned long address = stoi(str.substr(2,8), 0, 16);
+		unsigned long address = stol(str.substr(2,8), 0, 16);
 		if(this->history==NULL)
 			this->history=new Node<int>(address, 0);
 		if(!this->history->has(address))
