@@ -19,7 +19,7 @@ class Node{
 	public:
 		Node(unsigned long, T, T);
 		Node(unsigned long, T);
-		~Node(){delete left; delete right; left=right=NULL;};
+		~Node(){delete next; next=NULL;};
 		Node * replaceRoot();
 		bool add(unsigned long);
 		bool add(unsigned long, T);
