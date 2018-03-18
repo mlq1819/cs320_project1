@@ -111,7 +111,7 @@ int main(int argc, char *argv[]){
 	
 	
 	DoubleBimodal doubleBimodal = DoubleBimodal(16);
-	cout << "Double Bimodal 16: \t" <, endl;
+	cout << "Double Bimodal 16: \t" << endl;
 	cout << doubleBimodal.predict(&file) << "% Accurate" << endl;
 	if(OUTPUT)
 		output << doubleBimodal.getCorrect() << "," << doubleBimodal.getTotal() << "; ";
@@ -119,7 +119,7 @@ int main(int argc, char *argv[]){
 	file.seekg(0, ios_base::beg);
 	
 	doubleBimodal = DoubleBimodal(32);
-	cout << "Double Bimodal 32: \t" <, endl;
+	cout << "Double Bimodal 32: \t" << endl;
 	cout << doubleBimodal.predict(&file) << "% Accurate" << endl;
 	if(OUTPUT)
 		output << doubleBimodal.getCorrect() << "," << doubleBimodal.getTotal() << "; ";
@@ -127,7 +127,7 @@ int main(int argc, char *argv[]){
 	file.seekg(0, ios_base::beg);
 	
 	doubleBimodal = DoubleBimodal(128);
-	cout << "Double Bimodal 128: \t" <, endl;
+	cout << "Double Bimodal 128: \t" << endl;
 	cout << doubleBimodal.predict(&file) << "% Accurate" << endl;
 	if(OUTPUT)
 		output << doubleBimodal.getCorrect() << "," << doubleBimodal.getTotal() << "; ";
@@ -135,7 +135,7 @@ int main(int argc, char *argv[]){
 	file.seekg(0, ios_base::beg);
 	
 	doubleBimodal = DoubleBimodal(256);
-	cout << "Double Bimodal 256: \t" <, endl;
+	cout << "Double Bimodal 256: \t" << endl;
 	cout << doubleBimodal.predict(&file) << "% Accurate" << endl;
 	if(OUTPUT)
 		output << doubleBimodal.getCorrect() << "," << doubleBimodal.getTotal() << "; ";
@@ -143,7 +143,7 @@ int main(int argc, char *argv[]){
 	file.seekg(0, ios_base::beg);
 	
 	doubleBimodal = DoubleBimodal(512);
-	cout << "Double Bimodal 512: \t" <, endl;
+	cout << "Double Bimodal 512: \t" << endl;
 	cout << doubleBimodal.predict(&file) << "% Accurate" << endl;
 	if(OUTPUT)
 		output << doubleBimodal.getCorrect() << "," << doubleBimodal.getTotal() << "; ";
@@ -151,7 +151,7 @@ int main(int argc, char *argv[]){
 	file.seekg(0, ios_base::beg);
 	
 	doubleBimodal = DoubleBimodal(1024);
-	cout << "Double Bimodal 1024: \t" <, endl;
+	cout << "Double Bimodal 1024: \t" << endl;
 	cout << doubleBimodal.predict(&file) << "% Accurate" << endl;
 	if(OUTPUT)
 		output << doubleBimodal.getCorrect() << "," << doubleBimodal.getTotal() << "; ";
@@ -159,7 +159,7 @@ int main(int argc, char *argv[]){
 	file.seekg(0, ios_base::beg);
 	
 	doubleBimodal = DoubleBimodal(2048);
-	icout << "Double Bimodal 2048: \t" <, endl;
+	cout << "Double Bimodal 2048: \t" << endl;
 	cout << doubleBimodal.predict(&file) << "% Accurate" << endl;
 	if(OUTPUT)
 		output << doubleBimodal.getCorrect() << "," << doubleBimodal.getTotal() << ";" << endl;
@@ -293,7 +293,7 @@ double SingleBimodal::predict(ifstream * file){
 		bool data = this->history->get(address);
 		int i=0;
 		while(str[i]!=' ')
-			i++
+			i++;
 		i++;
 		if(str[i]=='T'){
 			this->history->set(address, true);
@@ -330,7 +330,7 @@ double DoubleBimodal::predict(ifstream * file){
 		int data = this->history->get(address);
 		int i=0;
 		while(str[i]!=' ')
-			i++
+			i++;
 		i++;
 		if(str[i]=='T'){
 			if(data>1)
