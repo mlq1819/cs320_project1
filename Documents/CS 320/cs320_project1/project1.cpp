@@ -10,8 +10,9 @@ int main(int argc, char *argv[]){
 		cout << "Not enough arguments" << endl;
 		return 0;
 	}
-	ifstream file(argv[1]);
-	if(file.good()){
+	ifstream file
+	file.open(argv[1]);
+	if(!file || !file.good()){
 		cout << "Bad input file" << endl;
 		return 0;
 	}

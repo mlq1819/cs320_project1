@@ -1,10 +1,25 @@
 #include "Predictors.h"
+#define MAX_SIZE 32
 
 using namespace std;
 
+bool readLine(ifstream * file, char* str){
+	int i=0;
+	while(i<MAX_SIZE){
+		char ch;
+		file >> ch;
+		if(ch!='\n')
+			str[i++] = ch;
+		else break;
+	}
+	if(i!=MAX_SIZE)
+		return true;
+	else return false;
+}
+
 double AlwaysTaken::predict(ifstream * file){
-	string str;
-	while(file->getline(file, str, '\n')){
+	char str[MAX_SIZE];
+	while(readLine(file, str)){
 		if(str[11]=='T')
 			this->correct++;
 		this->total++;
@@ -13,8 +28,8 @@ double AlwaysTaken::predict(ifstream * file){
 }
 
 double NeverTaken::predict(ifstream * file){
-	string str;
-	while(file->getline(file, str, '\n')){
+	char str[MAX_SIZE];
+	while(readLine(file, str)){
 		if(str[11]=='N')
 			this->correct++;
 		this->total++;
@@ -23,8 +38,8 @@ double NeverTaken::predict(ifstream * file){
 }
 
 double SingleBimodal::predict(ifstream * file){
-	string str;
-	while(file->getline(file, str, '\n')){
+	char str[MAX_SIZE];
+	while(readLine(file, str)){
 		unsigned long index = stoul(str.substr(2,8), nullptr, 16);
 		bool num = this->history[index];
 		if(str[11]=='T' && num)
@@ -39,8 +54,8 @@ double SingleBimodal::predict(ifstream * file){
 }
 
 double DoubleBimodal::predict(ifstream * file){
-	string str;
-	while(file->getline(file, str, '\n')){
+	char str[MAX_SIZE];
+	while(readLine(file, str)){
 		unsigned long index = stoul(str.substr(2,8), nullptr, 16);
 		int num = this->history[index];
 		if(str[11]=='T'){
