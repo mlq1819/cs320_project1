@@ -10,42 +10,50 @@ int main(int argc, char *argv[]){
 		cout << "Not enough arguments" << endl;
 		return 0;
 	}*/
-	cout << "Enter file: ";
-	string name;
-	cin >> name;
-	
-	ifstream file;
-	file.open(name);
-	while(!file || !file.good()){
-		cout << "Bad input file\nEnter file: ";
+	bool go = true;
+	do{
+		cout << "Enter file: ";
+		string name;
 		cin >> name;
+		
+		
 		ifstream file;
 		file.open(name);
-	}
-	cout << "Reading " << name << endl;
-	AlwaysTaken alwaysTaken = AlwaysTaken();
-	cout << "Always Taken: " << alwaysTaken.predict(&file) << endl;
-	file.clear();
-	file.seekg(0, ios_base::beg);
-	
-	NeverTaken neverTaken = NeverTaken();
-	cout << "Never Taken: " << neverTaken.predict(&file) << endl;
-	file.clear();
-	file.seekg(0, ios_base::beg);
-	
-	SingleBimodal singleBimodal = SingleBimodal();
-	cout << "Single Bimodal: " << singleBimodal.predict(&file) << endl;
-	file.clear();
-	file.seekg(0, ios_base::beg);
-	
-	DoubleBimodal doubleBimodal = DoubleBimodal();
-	cout << "Double Bimodal: " << doubleBimodal.predict(&file) << endl;
-	file.clear();
-	file.seekg(0, ios_base::beg);
-	
-	
-	
-	
-	file.close();
+		while(!file || !file.good()){
+			cout << "Bad input file\nEnter file: ";
+			if(file.is_open())
+				file.close();
+			cin >> name;
+			file.open(name);
+		}
+		cout << "Reading " << name << endl;
+		AlwaysTaken alwaysTaken = AlwaysTaken();
+		cout << "Always Taken: " << alwaysTaken.predict(&file) << endl;
+		file.clear();
+		file.seekg(0, ios_base::beg);
+		
+		NeverTaken neverTaken = NeverTaken();
+		cout << "Never Taken: " << neverTaken.predict(&file) << endl;
+		file.clear();
+		file.seekg(0, ios_base::beg);
+		
+		SingleBimodal singleBimodal = SingleBimodal();
+		cout << "Single Bimodal: " << singleBimodal.predict(&file) << endl;
+		file.clear();
+		file.seekg(0, ios_base::beg);
+		
+		DoubleBimodal doubleBimodal = DoubleBimodal();
+		cout << "Double Bimodal: " << doubleBimodal.predict(&file) << endl;
+		file.clear();
+		file.seekg(0, ios_base::beg);
+		
+		if(file.is_open())
+			file.close();
+		
+		cout << "Continue? Y/N: ";
+		char ch;
+		cin >> ch;
+		go=(ch=='Y');
+	} while (go);
 	return 0;
 }
