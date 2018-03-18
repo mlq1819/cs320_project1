@@ -170,7 +170,7 @@ int main(int argc, char *argv[]){
 	
 	GShare gshare = GShare(3);
 	cout << "GShare 3: \t" << endl;
-	cout << ghsare.predict(&file) << "% Accurate" << endl;
+	cout << gshare.predict(&file) << "% Accurate" << endl;
 	if(OUTPUT)
 		output << gshare.getCorrect() << "," << gshare.getTotal() << "; ";
 	file.clear();
@@ -178,7 +178,7 @@ int main(int argc, char *argv[]){
 	
 	gshare = GShare(4);
 	cout << "GShare 4: \t" << endl;
-	cout << ghsare.predict(&file) << "% Accurate" << endl;
+	cout << gshare.predict(&file) << "% Accurate" << endl;
 	if(OUTPUT)
 		output << gshare.getCorrect() << "," << gshare.getTotal() << "; ";
 	file.clear();
@@ -186,7 +186,7 @@ int main(int argc, char *argv[]){
 	
 	gshare = GShare(5);
 	cout << "GShare 5: \t" << endl;
-	cout << ghsare.predict(&file) << "% Accurate" << endl;
+	cout << gshare.predict(&file) << "% Accurate" << endl;
 	if(OUTPUT)
 		output << gshare.getCorrect() << "," << gshare.getTotal() << "; ";
 	file.clear();
@@ -194,7 +194,7 @@ int main(int argc, char *argv[]){
 	
 	gshare = GShare(6);
 	cout << "GShare 6: \t" << endl;
-	cout << ghsare.predict(&file) << "% Accurate" << endl;
+	cout << gshare.predict(&file) << "% Accurate" << endl;
 	if(OUTPUT)
 		output << gshare.getCorrect() << "," << gshare.getTotal() << "; ";
 	file.clear();
@@ -202,7 +202,7 @@ int main(int argc, char *argv[]){
 	
 	gshare = GShare(7);
 	cout << "GShare 7: \t" << endl;
-	cout << ghsare.predict(&file) << "% Accurate" << endl;
+	cout << gshare.predict(&file) << "% Accurate" << endl;
 	if(OUTPUT)
 		output << gshare.getCorrect() << "," << gshare.getTotal() << "; ";
 	file.clear();
@@ -210,7 +210,7 @@ int main(int argc, char *argv[]){
 	
 	gshare = GShare(8);
 	cout << "GShare 8: \t" << endl;
-	cout << ghsare.predict(&file) << "% Accurate" << endl;
+	cout << gshare.predict(&file) << "% Accurate" << endl;
 	if(OUTPUT)
 		output << gshare.getCorrect() << "," << gshare.getTotal() << "; ";
 	file.clear();
@@ -218,7 +218,7 @@ int main(int argc, char *argv[]){
 	
 	gshare = GShare(9);
 	cout << "GShare 9: \t" << endl;
-	cout << ghsare.predict(&file) << "% Accurate" << endl;
+	cout << gshare.predict(&file) << "% Accurate" << endl;
 	if(OUTPUT)
 		output << gshare.getCorrect() << "," << gshare.getTotal() << "; ";
 	file.clear();
@@ -226,7 +226,7 @@ int main(int argc, char *argv[]){
 	
 	gshare = GShare(10);
 	cout << "GShare 10: \t" << endl;
-	cout << ghsare.predict(&file) << "% Accurate" << endl;
+	cout << gshare.predict(&file) << "% Accurate" << endl;
 	if(OUTPUT)
 		output << gshare.getCorrect() << "," << gshare.getTotal() << "; ";
 	file.clear();
@@ -234,7 +234,7 @@ int main(int argc, char *argv[]){
 	
 	gshare = GShare(11);
 	cout << "GShare 11: \t" << endl;
-	cout << ghsare.predict(&file) << "% Accurate" << endl;
+	cout << gshare.predict(&file) << "% Accurate" << endl;
 	if(OUTPUT)
 		output << gshare.getCorrect() << "," << gshare.getTotal() << "; ";
 	file.clear();
@@ -511,7 +511,7 @@ double Tournament::predict(ifstream * file){
 		bool not_picked = true;
 		if(data>1){
 			picked = gshare;
-			not_picked = bimodal
+			not_picked = bimodal;
 		}
 		else{
 			picked = bimodal;
