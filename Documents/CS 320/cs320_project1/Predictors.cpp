@@ -20,7 +20,7 @@ bool readLine(ifstream * file, char* str){
 double AlwaysTaken::predict(ifstream * file){
 	char str[MAX_SIZE];
 	while(readLine(file, str)){
-		if(str[11]=='T')
+		if(str[11]=='T') 
 			this->correct++;
 		this->total++;
 	}
