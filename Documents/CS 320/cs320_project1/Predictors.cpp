@@ -8,6 +8,7 @@ Node<T>::Node(unsigned long address, T data, T def){
 	this->address = address;
 	this->data = data;
 	this->def = def;
+	this->left=this->right=NULL;
 }
 
 template <class T>
@@ -15,6 +16,7 @@ Node<T>::Node(unsigned long address, T data){
 	this->address = address;
 	this->data = data;
 	this->def = data;
+	this->left=this->right=NULL;
 }
 
 template <class T>
