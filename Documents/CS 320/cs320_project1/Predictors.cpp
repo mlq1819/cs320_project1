@@ -21,7 +21,7 @@ double AlwaysTaken::predict(ifstream * file){
 	char str[MAX_SIZE];
 	long lineNum = 1;
 	while(readTheLine(file,str)){
-		cout << "Reading line " << lineNum++ << endl;
+		cout << lineNum++ << " : " << str << endl;
 		if(str[11]=='T')
 			this->correct++;
 		this->total++;
