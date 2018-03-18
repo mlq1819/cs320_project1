@@ -29,7 +29,9 @@ int main(int argc, char *argv[]){
 		}
 	}
 	
-	cout << "Reading " << name << endl;
+	cout << "Reading " << arg[1] << endl;
+	if(OUTPUT)
+		cout << "Outputting to " << arg[2] << endl;
 	AlwaysTaken alwaysTaken = AlwaysTaken();
 	if(OUTPUT){
 		alwaysTaken.predict(&file);
