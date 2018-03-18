@@ -3,7 +3,7 @@
 
 using namespace std;
 
-bool readTheLine(ifstream * file, char** str){
+bool readTheLine(ifstream * file, char*[32] str){
 	int i=0;
 	while(i<MAX_SIZE){
 		char ch;
