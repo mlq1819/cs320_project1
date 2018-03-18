@@ -291,12 +291,20 @@ double SingleBimodal::predict(ifstream * file){
 				this->history=this->history->replaceRoot();
 		}
 		bool data = this->history->get(address);
-		if(str[11]=='T' && data)
-			this->correct++;
-		else if(str[11]=='N' && !data)
-			this->correct++;
-		else
-			this->history->set(address, !data);
+		int i=0;
+		while(str[i]!=' ')
+			i++
+		i++;
+		if(str[i]=='T'){
+			this->history->set(address, true);
+			if(data)
+				this->correct++;
+		}
+		else{
+			this->history->set(address, false);
+			if(!data)
+				this->correct++;
+		}
 	}
 	return this->percent();
 }
@@ -320,14 +328,18 @@ double DoubleBimodal::predict(ifstream * file){
 				this->history=this->history->replaceRoot();
 		}
 		int data = this->history->get(address);
-		if(str[11]=='T'){
+		int i=0;
+		while(str[i]!=' ')
+			i++
+		i++;
+		if(str[i]=='T'){
 			if(data>1)
 				this->correct++;
 			if(data<3)
 				this->history->set(address, data+1);
 		}
 		else if(str[11]=='N'){
-			if(data>1)
+			if(data<2)
 				this->correct++;
 			if(data>0)
 				this->history->set(address, data-1);
