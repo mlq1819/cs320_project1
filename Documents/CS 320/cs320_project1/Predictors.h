@@ -38,6 +38,8 @@ class AlwaysTaken{
 		AlwaysTaken(){this->correct=this->total=0;};
 		double percent(){return ((double) this->correct)/this->total * 100;};
 		double predict(std::ifstream*);
+		long getCorrect(){return this->correct;};
+		long getTotal(){return this->total;};
 };
 
 class NeverTaken{
@@ -48,6 +50,8 @@ class NeverTaken{
 		NeverTaken(){this->correct=this->total=0;};
 		double percent(){return ((double) this->correct)/this->total * 100;};
 		double predict(std::ifstream*);
+		long getCorrect(){return this->correct;};
+		long getTotal(){return this->total;};
 };
 
 class SingleBimodal{
@@ -61,6 +65,8 @@ class SingleBimodal{
 		~SingleBimodal(){delete this->history; this->history=NULL;};
 		double percent(){return ((double) this->correct)/this->total * 100;};
 		double predict(std::ifstream*);
+		long getCorrect(){return this->correct;};
+		long getTotal(){return this->total;};
 };
 
 class DoubleBimodal{
@@ -74,6 +80,8 @@ class DoubleBimodal{
 		~DoubleBimodal(){delete this->history; this->history=NULL;};
 		double percent(){return ((double) this->correct)/this->total * 100;};
 		double predict(std::ifstream*);
+		long getCorrect(){return this->correct;};
+		long getTotal(){return this->total;};
 };
 
 #endif
