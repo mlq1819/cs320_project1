@@ -240,6 +240,15 @@ int main(int argc, char *argv[]){
 	file.seekg(0, ios_base::beg);
 	
 	
+	
+	Tournament tournament = Tournament();
+	cout << "Tournament: \t" << endl;
+	cout << tournament.predict(&file) << "% Accurate" << endl;
+	if(OUTPUT)
+		output << tournament.getCorrect() << "," << tournament.getTotal() << "; ";
+	file.clear();
+	file.seekg(0, ios_base::beg);
+	
 	if(file.is_open())
 		file.close();
 	return 0;
