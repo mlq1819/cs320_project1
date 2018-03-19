@@ -345,7 +345,7 @@ double SingleBimodal::predict(ifstream * file){
 		this->total++;
 		unsigned long address = stol(str.substr(2,8), 0, 16);
 		if(this->history==NULL)
-			this->history=new Node<bool>(address, true);
+			this->history=new List<bool>(address, true);
 		if(!this->history->has(address))
 			this->history->add(address);
 		bool data = this->history->get(address);
@@ -382,7 +382,7 @@ bool DoubleBimodal::predictOne(string str){
 	bool toReturn=false;
 	unsigned long address = stol(str.substr(2,8), 0, 16);
 	if(this->history==NULL)
-		this->history=new Node<int>(address, 3);
+		this->history=new List<int>(address, 3);
 	if(!this->history->has(address))
 		this->history->add(address);
 	int num = this->history->get(address);
@@ -422,7 +422,7 @@ bool GShare::predictOne(string str){
 	unsigned long address = stol(str.substr(2,8), 0, 16);
 	address = address ^ this->global_history_bits;
 	if(this->history==NULL)
-		this->history=new Node<int>(address, 3);
+		this->history=new List<int>(address, 3);
 	if(!this->history->has(address))
 		this->history->add(address);
 	int num = this->history->get(address);
@@ -456,7 +456,7 @@ double Tournament::predict(ifstream * file){
 		this->total++;
 		unsigned long address = stol(str.substr(2,8), 0, 16);
 		if(this->history==NULL)
-			this->history=new Node<int>(address, 3);
+			this->history=new List<int>(address, 3);
 		if(!this->history->has(address))
 			this->history->add(address);
 		int data = this->history->get(address);
