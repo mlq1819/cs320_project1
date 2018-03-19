@@ -250,6 +250,10 @@ List<T>::List(unsigned int size, T def){
 	this->addresses = new unsigned long[size];
 	T tmp[size];
 	this->data = tmp;
+	for(unsigned int i=0; i<size; i++){
+		this->addresses[i]=0;
+		this->data[i]=def;
+	}
 	this->size = size;
 	this->def = def;
 	this->soft_cur=this->hard_cur=0;
