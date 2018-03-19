@@ -12,7 +12,7 @@ class Node{
 		Node * next;
 		long id;
 		unsigned long address;
-		T def;
+		T def; 
 		T data;
 		void init(unsigned long, T, T, long);
 		Node(unsigned long, T, T, long);
