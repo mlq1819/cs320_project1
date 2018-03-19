@@ -112,7 +112,7 @@ class Tournament{
 		long max_table_size = 2048;
 	public:
 		Tournament();
-		~Tournament(){delete this->history; delete this->bimodal; delete this->gshare; this->history=this->bimodal=this->gshare=NULL;};
+		~Tournament(){delete this->history; delete this->bimodal; delete this->gshare; this->history=NULL; this->bimodal=NULL; this->gshare=NULL;};
 		double percent(){return ((double) this->correct)/this->total * 100;};
 		double predict(std::ifstream*);
 		long getCorrect(){return this->correct;};
