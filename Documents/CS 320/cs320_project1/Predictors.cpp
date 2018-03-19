@@ -1,5 +1,4 @@
 #include "Predictors.h"
-#define MAX_SIZE 32
 #define OUTPUT true
 
 using namespace std;
@@ -294,7 +293,7 @@ bool Node<T>::add(unsigned long address, T data, T def){
 	this->id++;
 	if(this->next!=NULL)
 		return this->next->add(address, data, def);
-	this->next=new Node(address, data, def, this->id-1);
+	this->next=new Node(address, data, def, 0);
 	return true;
 }
 
