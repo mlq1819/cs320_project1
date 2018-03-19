@@ -247,7 +247,7 @@ int main(int argc, char *argv[]){
 
 template <class T>
 List<T>::List(unsigned int size, T def){
-	unsigned int tmp1[size];
+	unsigned long tmp1[size];
 	this->addresses = tmp1; 
 	T tmp2[size];
 	this->data = tmp2;
