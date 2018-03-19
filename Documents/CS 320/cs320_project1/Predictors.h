@@ -104,15 +104,15 @@ class GShare{
 
 class Tournament{
 	private:
-		DoubleBimodal bimodal;
-		GShare gshare;
+		DoubleBimodal * bimodal;
+		GShare * gshare;
 		Node<int>* history;
 		long correct;
 		long total;
 		long max_table_size = 2048;
 	public:
 		Tournament();
-		~Tournament(){delete this->history; this->history=NULL;};
+		~Tournament(){delete this->history; delete this->bimodal; delete this->gshare; this->history=this->bimodal=this->gshare=NULL;};
 		double percent(){return ((double) this->correct)/this->total * 100;};
 		double predict(std::ifstream*);
 		long getCorrect(){return this->correct;};

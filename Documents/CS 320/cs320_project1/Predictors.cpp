@@ -486,8 +486,8 @@ bool GShare::predictOne(string str){
 }
 
 Tournament::Tournament(){
-	this->bimodal = DoubleBimodal(2048);
-	this->gshare = GShare(11);
+	this->bimodal = new DoubleBimodal(2048);
+	this->gshare = new GShare(11);
 	this->history=NULL;
 	this->correct=this->total=0;
 }
@@ -505,8 +505,8 @@ double Tournament::predict(ifstream * file){
 				this->history=this->history->replaceRoot();
 		}
 		int data = this->history->get(address);
-		bool bimodal=this->bimodal.predictOne(str);
-		bool gshare=this->gshare.predictOne(str);
+		bool bimodal=this->bimodal->predictOne(str);
+		bool gshare=this->gshare->predictOne(str);
 		bool picked = true;
 		bool not_picked = true;
 		if(data>1){
