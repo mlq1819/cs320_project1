@@ -25,7 +25,7 @@ run: all
 
 mem: all
 	rm st1_output.txt
-	valgrind ./$(P)
+	valgrind ./$(P) short_trace1.txt st1_output.txt
 	
 	
 checkmem:  all
