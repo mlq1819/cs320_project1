@@ -246,6 +246,74 @@ int main(int argc, char *argv[]){
 }
 
 template <class T>
+List<T>::List(unsigned int size, T def){
+	this->addresses = new unsigned long[size];
+	this->data = new T[size];
+	for(int i=0; i<size; i++)
+		this->data=def;
+	this->size = size;
+	this->def = def;
+	this->soft_cur=this->hard_cur=0;
+}
+
+template <class T>
+bool List<T>::add(unsigned long address){
+	this->addresses[this->hard_cur]=address;
+	this->data[this->hard_cur]=this->def;
+	this->soft_cur=this->hard_cur=(this->hard_cur+1)%this->size;
+	return true;
+}
+
+template <class T>
+bool List<T>::has(unsigned long address){
+	if(this->addresses[this->soft_cur]==address)
+		return true;
+	this->soft_cur=this->hard_cur;
+	do{
+		if(this->addresses[this->soft_cur]==address)
+			return true;
+		if(this->soft_cur==0)
+			this->soft_cur+=this->size;
+		this->soft_cur--;
+	} while (this->soft_cur!=this->hard_cur);
+	return false;
+}
+
+template <class T>
+T List<T>::get(unsigned long address){
+	if(this->addresses[this->soft_cur]==address)
+		return this->data[this->soft_cur];
+	this->soft_cur=this->hard_cur;
+	do{
+		if(this->addresses[this->soft_cur]==address)
+			return this->data[this->soft_cur];
+		if(this->soft_cur==0)
+			this->soft_cur+=this->size;
+		this->soft_cur--;
+	} while (this->soft_cur!=this->hard_cur);
+	return this->def;
+}
+
+template <class T>
+bool List<T>::set(unsigned long address, T data){
+	if(this->addresses[this->soft_cur]==address){
+		this->data[this->soft_cur]=data;
+		return true;
+	}
+	this->soft_cur=this->hard_cur;
+	do{
+		if(this->addresses[this->soft_cur]==address){
+			this->data[this->soft_cur]=data;
+			return true;
+		}
+		if(this->soft_cur==0)
+			this->soft_cur+=this->size;
+		this->soft_cur--;
+	} while (this->soft_cur!=this->hard_cur);
+	return false;
+}
+
+template <class T>
 void Node<T>::init(unsigned long address, T data, T def, long id){
 	this->id=id;
 	this->address = address;

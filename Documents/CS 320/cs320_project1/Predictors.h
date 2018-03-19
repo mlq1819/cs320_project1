@@ -7,6 +7,24 @@
 #include <string>
 
 template <class T>
+class List{
+	private:
+		unsigned long* addresses;
+		T* data;
+		T def;
+		unsigned int hard_cur;
+		unsigned int soft_cur;
+		unsigned int size;
+	public:
+		List(unsigned int, T);
+		~List(){delete addresses; delete data; addresses=NULL; data=NULL;};
+		bool add(unsigned long);
+		bool has(unsigned long);
+		T get(unsigned long);
+		bool set(unsigned long, T);
+};
+
+template <class T>
 class Node{
 	private:
 		Node * next;
