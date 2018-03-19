@@ -368,17 +368,13 @@ double SingleBimodal::predict(ifstream * file){
 		int i=0;
 		while(str[i]!=' ')
 			i++;
-		i++;
-		if(str[i]=='T'){
+		bool taken = str[++i]=='T';
+		if(taken==data)
+			this->correct++;
+		if(taken)
 			this->history->set(address, true);
-			if(data)
-				this->correct++;
-		}
-		else{
+		else
 			this->history->set(address, false);
-			if(!data)
-				this->correct++;
-		}
 	}
 	return this->percent();
 }
@@ -399,7 +395,7 @@ double DoubleBimodal::predict(ifstream * file){
 
 bool DoubleBimodal::predictOne(string str){
 	this->total++;
-	bool toReturn=true;
+	bool toReturn=false;
 	unsigned long address = stol(str.substr(2,8), 0, 16);
 	if(this->history==NULL)
 		this->history=new Node<int>(address, 3);
@@ -408,27 +404,20 @@ bool DoubleBimodal::predictOne(string str){
 		if(this->history->getID()>=this->max_table_size)
 			this->history=this->history->replaceRoot();
 	}
-	int data = this->history->get(address);
+	int num = this->history->get(address);
+	bool data = num>1;
 	int i=0;
 	while(str[i]!=' ')
 		i++;
-	i++;
-	if(str[i]=='T'){
-		if(data>1)
-			this->correct++;
-		else
-			toReturn=false;
-		if(data<3)
-			this->history->set(address, data+1);
+	bool taken = str[++i]=='T';
+	if(data==taken){
+		this->correct++;
+		toReturn=true;
 	}
-	else if(str[11]=='N'){
-		if(data<2)
-			this->correct++;
-		else
-			toReturn=false;
-		if(data>0)
-			this->history->set(address, data-1);
-	}
+	if(taken && num<3)
+		this->history->set(address, num+1);
+	else if(!taken && num>0)
+		this->history->set(address, num-1);
 	return toReturn;
 }
 
@@ -448,7 +437,7 @@ double GShare::predict(ifstream * file){
 
 bool GShare::predictOne(string str){
 	this->total++;
-	bool toReturn = true;
+	bool toReturn = false;
 	unsigned long address = stol(str.substr(2,8), 0, 16);
 	address = address ^ this->global_history_bits;
 	if(this->history==NULL)
@@ -458,29 +447,21 @@ bool GShare::predictOne(string str){
 		if(this->history->getID()>=this->max_table_size)
 			this->history=this->history->replaceRoot();
 	}
-	int data = this->history->get(address);
+	int num = this->history->get(address);
+	bool data=num>1;
 	int i=0;
 	this->global_history_bits = this->global_history_bits << 1;
 	while(str[i]!=' ')
 		i++;
-	i++;
-	if(str[i]=='T'){
-		this->global_history_bits++;
-		if(data>1)
-			this->correct++;
-		else
-			toReturn=false;
-		if(data<3)
-			this->history->set(address, data+1);
+	bool taken=str[++i]=='T';
+	if(taken==data){
+		this->correct++;
+		toReturn=true;
 	}
-	else if(str[11]=='N'){
-		if(data<2)
-			this->correct++;
-		else
-			toReturn=false;
-		if(data>0)
-			this->history->set(address, data-1);
-	}
+	if(taken && num<3)
+		this->history->set(address, num+1);
+	else if(!taken && num>0)
+		this->history->set(address, num-1);
 	return toReturn;
 }
 
@@ -519,8 +500,8 @@ double Tournament::predict(ifstream * file){
 		int i=0;
 		while(str[i]!=' ')
 			i++;
-		i++;
-		if((str[i]=='T' && picked) || (str[i]!='T' && !picked)){
+		bool taken=str[++i]=='T';
+		if((taken && picked) || (!taken && !picked)){
 			this->correct++;
 			if(picked^not_picked){
 				if(data<3 && data>1)
