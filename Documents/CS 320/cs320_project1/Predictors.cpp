@@ -313,14 +313,6 @@ bool List<T>::set(unsigned long address, T data){
 	return false;
 }
 
-	if(this->address==address){
-		this->data=data;
-		return true;
-	}
-	if(this->next!=NULL)
-		return this->next->set(address, data);
-	return false;
-}
 double AlwaysTaken::predict(ifstream * file){
 	string str;
 	while(getline(*file, str)){
