@@ -247,13 +247,11 @@ int main(int argc, char *argv[]){
 
 template <class T>
 List<T>::List(unsigned int size, T def){
+	cout << "fucker 1" << endl;
 	unsigned long tmp1[size];
 	this->addresses = tmp1; 
-	cout << "fucker 1" << endl;
 	T tmp2[size];
-	cout << "fucker 2" << endl;
 	this->data = tmp2;
-	cout << "fucker 3" << endl;
 	for(unsigned int i=0; i<size; i++){
 		this->addresses[i]=0;
 		this->data[i]=def;
