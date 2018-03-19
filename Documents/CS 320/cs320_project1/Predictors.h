@@ -24,30 +24,6 @@ class List{
 		bool set(unsigned long, T);
 };
 
-template <class T>
-class Node{
-	private:
-		Node * next;
-		long id;
-		unsigned long address;
-		T def;
-		T data;
-		void init(unsigned long, T, T, long);
-		Node(unsigned long, T, T, long);
-	public:
-		Node(unsigned long, T, T);
-		Node(unsigned long, T);
-		~Node(){delete next; next=NULL;};
-		Node * replaceRoot();
-		bool add(unsigned long);
-		bool add(unsigned long, T);
-		bool add(unsigned long, T, T);
-		bool has(unsigned long);
-		T get(unsigned long);
-		bool set(unsigned long, T);
-		long getID(){return this->id;};
-};
-
 class AlwaysTaken{
 	private:
 		long correct;
@@ -74,7 +50,7 @@ class NeverTaken{
 
 class SingleBimodal{
 	private:
-		Node<bool>* history;
+		List<bool>* history;
 		long correct;
 		long total;
 		long max_table_size;
@@ -89,7 +65,7 @@ class SingleBimodal{
 
 class DoubleBimodal{
 	private:
-		Node<int>* history;
+		List<int>* history;
 		long correct;
 		long total;
 		long max_table_size;
@@ -105,7 +81,7 @@ class DoubleBimodal{
 
 class GShare{
 	private:
-		Node<int>* history;
+		List<int>* history;
 		long correct;
 		long total;
 		long max_table_size = 2048;
@@ -124,7 +100,7 @@ class Tournament{
 	private:
 		DoubleBimodal * bimodal;
 		GShare * gshare;
-		Node<int>* history;
+		List<int>* history;
 		long correct;
 		long total;
 		long max_table_size = 2048;
