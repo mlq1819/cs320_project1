@@ -248,9 +248,9 @@ int main(int argc, char *argv[]){
 template <class T>
 List<T>::List(unsigned int size, T def){
 	this->addresses = new unsigned long[size];
-	this->data = T()[size];
+	this->data = T[size];
 	for(unsigned int i=0; i<size; i++)
-		this->data=def;
+		this->data[i]=def;
 	this->size = size;
 	this->def = def;
 	this->soft_cur=this->hard_cur=0;
