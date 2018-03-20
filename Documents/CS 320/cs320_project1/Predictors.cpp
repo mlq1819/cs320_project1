@@ -275,7 +275,7 @@ Node<T>::~Node(){
 	delete this->next;
 	if(this->parent!=NULL)
 		this->parent->next=NULL;
-	this->next=this->parent=NULL();
+	this->next=this->parent=NULL;
 }
 
 template <class T>
