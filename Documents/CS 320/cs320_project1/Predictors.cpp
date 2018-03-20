@@ -304,8 +304,10 @@ template <class T>
 bool List<T>::has(unsigned long address){
 	Node<T> * current = this->root;
 	while(current!=NULL){
-		if(current->address==address)
+		if(current->address==address){
+			current=NULL;
 			return true;
+		}
 		current=current->next;
 	}
 	return false;
@@ -315,8 +317,11 @@ template <class T>
 T List<T>::get(unsigned long address){
 	Node<T> * current = this->root;
 	while(current!=NULL){
-		if(current->address==address)
-			return current->data;
+		if(current->address==address){
+			T data = current->data;
+			current=NULL;
+			return data;
+		}
 		current=current->next;
 	}
 	return this->def;
