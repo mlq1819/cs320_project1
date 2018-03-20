@@ -403,10 +403,7 @@ double SingleBimodal::predict(ifstream * file){
 		unsigned long address = stol(str.substr(2,8), 0, 16);
 		this->history->add(address);
 		bool data = this->history->get(address);
-		int i=0;
-		while(str[i]!=' ')
-			i++;
-		bool taken = str[++i]=='T';
+		bool taken = str[11]=='T';
 		if(taken==data)
 			this->correct++;
 		if(taken)
@@ -437,10 +434,7 @@ bool DoubleBimodal::predictOne(string str){
 	this->history->add(address);
 	int num = this->history->get(address);
 	bool data = num>1;
-	int i=0;
-	while(str[i]!=' ')
-		i++;
-	bool taken = str[++i]=='T';
+	bool taken = str[11]=='T';
 	if(data==taken){
 		this->correct++;
 		toReturn=true;
@@ -476,11 +470,8 @@ bool GShare::predictOne(string str){
 	this->history->add(address);
 	int num = this->history->get(address);
 	bool data=num>1;
-	int i=0;
 	this->global_history_bits = this->global_history_bits << 1;
-	while(str[i]!=' ')
-		i++;
-	bool taken=str[++i]=='T';
+	bool taken=str[11]=='T';
 	if(taken==data){
 		this->correct++;
 		toReturn=true;
@@ -520,10 +511,7 @@ double Tournament::predict(ifstream * file){
 			picked = bimodal;
 			not_picked = gshare;
 		}
-		int i=0;
-		while(str[i]!=' ')
-			i++;
-		bool taken=str[++i]=='T';
+		bool taken=str[11]=='T';
 		if((taken && picked) || (!taken && !picked)){
 			this->correct++;
 			if(picked^not_picked){
