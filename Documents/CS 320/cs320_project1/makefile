@@ -16,8 +16,16 @@ clear:
 	
 clearmem:
 	clear
-	claer
+	clear
 	make mem
+	
+clearpull:
+	git pull
+	mlq1819
+	mlqvermont12
+	clear
+	clear
+	make clear
 	
 run: all
 	rm -rf st1_output.txt
