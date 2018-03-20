@@ -272,12 +272,12 @@ Node<T>::Node(unsigned long address, T data, Node * parent){
 
 template <class T>
 bool List<T>::add(unsigned long address){
-	if(this->has(address)){
+	if(this->has(address))
 		return false;
-	}
 	Node<T> * temp=this->root;
 	this->root=new Node<T>(address, this->def);
-	this->root->next=temp;
+	if(this->root!=NULL)
+		this->root->next=temp;
 	if(temp==NULL)
 		return true;
 	temp->parent=this->root;
