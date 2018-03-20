@@ -29,7 +29,7 @@ class List{
 		unsigned long current_size;
 	public:
 		List(unsigned long max_size, T def){this->max_size=max_size; this->def=def; this->current=this->root=NULL;};
-		~List(){delete this->root; this->current=this->root=NULL;};
+		~List(){delete this->root; this->root=NULL;};
 		bool add(unsigned long);
 		bool has(unsigned long);
 		T get(unsigned long);
