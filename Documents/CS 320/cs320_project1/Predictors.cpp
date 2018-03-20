@@ -255,84 +255,90 @@ int main(int argc, char *argv[]){
 }
 
 template <class T>
-void Node<T>::init(unsigned long address, T data, T def, long id){
-	this->id=id;
-	this->address = address;
-	this->data = data;
-	this->def = def;
-	this->next=NULL;
-}
-
-template <class T>
-Node<T>::Node(unsigned long address, T data, T def, long id){
-	init(address, data, def, id);
-}
-
-template <class T>
-Node<T>::Node(unsigned long address, T data, T def){
-	init(address, data, def, 0);
-	
-}
-
-template <class T>
 Node<T>::Node(unsigned long address, T data){
-	init(address, data, data, 0);
+	this->parent=NULL;
+	this->address=address;
+	this->data=data;
+	this->id=0;
 }
 
 template <class T>
-Node<T> * Node<T>::replaceRoot(){
-	Node * newRoot = this->next;
-	this->next=NULL;
-	delete this;
-	return newRoot;
+Node<T>::Node(unsigned long address, T data, Node * parent){
+	this->parent=parent;
+	this->address=address;
+	this->data=data;
+	this->id=0;
 }
 
 template <class T>
-bool Node<T>::add(unsigned long address){
-	return this->add(address, this->def, this->def);
-}
-
-template <class T>
-bool Node<T>::add(unsigned long address, T data){
-	return this->add(address, data, this->def);
-}
-
-template <class T>
-bool Node<T>::add(unsigned long address, T data, T def){
-	this->id++;
-	if(this->next!=NULL)
-		return this->next->add(address, data, def);
-	this->next=new Node(address, data, def, 0);
+bool List<T>::add(unsigned long address){
+	if(this->has(address))
+		return false;
+	Node* temp=this->root;
+	this->root=new Node(address, this->def);
+	this->root->next=temp;
+	if(temp==NULL)
+		return true;
+	temp->parent=this->root;
+	while(temp!=NULL){
+		temp->id++;
+		if(temp->id>=this->max_size){
+			delete temp;
+			temp=NULL;
+		} else
+			temp=temp->next;
+	}
 	return true;
 }
 
 template <class T>
-bool Node<T>::has(unsigned long address){
-	if(this->address==address)
-		return true;
-	if(this->next!=NULL)
-		return this->next->has(address);
+bool List<T>::has(unsigned long address){
+	Node * current = this->root;
+	while(current!=NULL){
+		if(current->address==address)
+			return true;
+	}
 	return false;
 }
 
 template <class T>
-T Node<T>::get(unsigned long address){
-	if(this->address==address)
-		return this->data;
-	if(this->next!=NULL)
-		return this->next->get(address);
+T List<T>::get(unsigned long address){
+	Node * current = this->root;
+	while(current!=NULL){
+		if(current->address==address)
+			return current->data;
+	}
 	return this->def;
 }
 
 template <class T>
-bool Node<T>::set(unsigned long address, T data){
-	if(this->address==address){
-		this->data=data;
-		return true;
+bool List<T>::set(unsigned long address, T data){
+	Node * current = this->root;
+	while(current!=NULL){
+		if(current->address==address)
+			break;
+		current->id++;
+		current=current->next;
 	}
-	if(this->next!=NULL)
-		return this->next->set(address, data);
-	return false;
+	if(current==NULL){
+		current=this->root;
+		while(current!=NULL){
+			current->id--;
+			current=current->next;
+		}
+		return false;
+	}
+	current->data=data;
+	current->id=0;
+	if(current->parent!=NULL)
+		current->parent->next=current->next;
+	if(current->next!=NULL)
+		current->next->parent=current->parent;
+	current->parent=NULL;
+	current->next=this->root;
+	this->root->parent=current;
+	this->root=current;
+	return true;
 }
 
 double AlwaysTaken::predict(ifstream * file){
@@ -357,8 +363,7 @@ double NeverTaken::predict(ifstream * file){
 
 SingleBimodal::SingleBimodal(long max_table_size){
 	this->correct=this->total=0;
-	this->history=NULL;
-	this->max_table_size=max_table_size;
+	this->history=new List<bool>(max_table_size, true);
 }
 
 double SingleBimodal::predict(ifstream * file){
@@ -366,13 +371,7 @@ double SingleBimodal::predict(ifstream * file){
 	while(getline(*file, str)){
 		this->total++;
 		unsigned long address = stol(str.substr(2,8), 0, 16);
-		if(this->history==NULL)
-			this->history=new Node<bool>(address, true);
-		if(!this->history->has(address)){
-			this->history->add(address);
-			if(this->history->getID()>=this->max_table_size)
-				this->history=this->history->replaceRoot();
-		}
+		this->history->add(address);
 		bool data = this->history->get(address);
 		int i=0;
 		while(str[i]!=' ')
@@ -390,8 +389,7 @@ double SingleBimodal::predict(ifstream * file){
 
 DoubleBimodal::DoubleBimodal(long max_table_size){
 	this->correct=this->total=0;
-	this->history=NULL;
-	this->max_table_size=max_table_size;
+	this->history=new List<int>(max_table_size, 3);
 }
 
 double DoubleBimodal::predict(ifstream * file){
@@ -406,13 +404,7 @@ bool DoubleBimodal::predictOne(string str){
 	this->total++;
 	bool toReturn=false;
 	unsigned long address = stol(str.substr(2,8), 0, 16);
-	if(this->history==NULL)
-		this->history=new Node<int>(address, 3);
-	if(!this->history->has(address)){
-		this->history->add(address);
-		if(this->history->getID()>=this->max_table_size)
-			this->history=this->history->replaceRoot();
-	}
+	this->history->add(address);
 	int num = this->history->get(address);
 	bool data = num>1;
 	int i=0;
@@ -433,7 +425,7 @@ bool DoubleBimodal::predictOne(string str){
 GShare::GShare(int global_history_bits){
 	this->correct=this->total=0; 
 	this->global_history_bits=global_history_bits; 
-	this->history=NULL;
+	this->history=new List<int>(2048, 3);
 }
 
 double GShare::predict(ifstream * file){
@@ -449,13 +441,7 @@ bool GShare::predictOne(string str){
 	bool toReturn = false;
 	unsigned long address = stol(str.substr(2,8), 0, 16);
 	address = address ^ this->global_history_bits;
-	if(this->history==NULL)
-		this->history=new Node<int>(address, 3);
-	if(!this->history->has(address)){
-		this->history->add(address);
-		if(this->history->getID()>=this->max_table_size)
-			this->history=this->history->replaceRoot();
-	}
+	this->history->add(address);
 	int num = this->history->get(address);
 	bool data=num>1;
 	int i=0;
@@ -477,7 +463,7 @@ bool GShare::predictOne(string str){
 Tournament::Tournament(){
 	this->bimodal = new DoubleBimodal(2048);
 	this->gshare = new GShare(11);
-	this->history=NULL;
+	this->history=new List<int>(2048, 3);
 	this->correct=this->total=0;
 }
 
@@ -486,13 +472,7 @@ double Tournament::predict(ifstream * file){
 	while(getline(*file, str)){
 		this->total++;
 		unsigned long address = stol(str.substr(2,8), 0, 16);
-		if(this->history==NULL)
-			this->history=new Node<int>(address, 3);
-		if(!this->history->has(address)){
-			this->history->add(address);
-			if(this->history->getID()>=this->max_table_size)
-				this->history=this->history->replaceRoot();
-		}
+		this->history->add(address);
 		int data = this->history->get(address);
 		bool bimodal=this->bimodal->predictOne(str);
 		bool gshare=this->gshare->predictOne(str);

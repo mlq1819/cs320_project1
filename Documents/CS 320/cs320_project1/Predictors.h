@@ -8,26 +8,33 @@
 
 template <class T>
 class Node{
-	private:
-		Node * next;
-		long id;
-		unsigned long address;
-		T def; 
-		T data;
-		void init(unsigned long, T, T, long);
-		Node(unsigned long, T, T, long);
 	public:
-		Node(unsigned long, T, T);
+		Node * parent;
+		Node * next;
+		unsigned long address; 
+		T data;
+		unsigned long id;
 		Node(unsigned long, T);
+		Node(unsigned long, T, Node *);
 		~Node(){delete next; next=NULL;};
-		Node * replaceRoot();
+};
+
+template <class T>
+class List{
+	private:
+		Node * root;
+		T def;
+		unsigned long address;
+		unsigned long max_size;
+		unsigned long current_size;
+	public:
+		List(unsigned long max_size, T def){this->max_size=max_size; this->def=def; this->current=this->root=NULL;};
+		~List(){delete this->root; this->current=this->root=NULL;};
 		bool add(unsigned long);
-		bool add(unsigned long, T);
-		bool add(unsigned long, T, T);
 		bool has(unsigned long);
 		T get(unsigned long);
 		bool set(unsigned long, T);
-		long getID(){return this->id;};
+		unsigned long getSize(){return this->current_size;};
 };
 
 class AlwaysTaken{
@@ -56,10 +63,9 @@ class NeverTaken{
 
 class SingleBimodal{
 	private:
-		Node<bool>* history;
+		List<bool>* history;
 		long correct;
 		long total;
-		long max_table_size;
 	public:
 		SingleBimodal(long);
 		~SingleBimodal(){delete this->history; this->history=NULL;};
@@ -71,10 +77,9 @@ class SingleBimodal{
 
 class DoubleBimodal{
 	private:
-		Node<int>* history;
+		List<int>* history;
 		long correct;
 		long total;
-		long max_table_size;
 	public:
 		DoubleBimodal(long);
 		~DoubleBimodal(){delete this->history; this->history=NULL;};
@@ -87,7 +92,7 @@ class DoubleBimodal{
 
 class GShare{
 	private:
-		Node<int>* history;
+		List<int>* history;
 		long correct;
 		long total;
 		long max_table_size = 2048;
@@ -106,10 +111,9 @@ class Tournament{
 	private:
 		DoubleBimodal * bimodal;
 		GShare * gshare;
-		Node<int>* history;
+		List<int>* history;
 		long correct;
 		long total;
-		long max_table_size = 2048;
 	public:
 		Tournament();
 		~Tournament(){delete this->history; delete this->bimodal; delete this->gshare; this->history=NULL; this->bimodal=NULL; this->gshare=NULL;};
