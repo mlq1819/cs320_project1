@@ -5,18 +5,17 @@
 using namespace std;
 
 int main(int argc, char *argv[]){
-	if(FORCE){
-		argc=3;
-		argv[1]="short_trace1.txt";
-		argv[2]="st1_output.txt";
-	}
-	
-	if((OUTPUT && argc<3) || argc<2){
-		cout << "Not enough arguments" << endl;
-		return 0;
+	if(!FORCE){
+		if((OUTPUT && argc<3) || argc<2){
+			cout << "Not enough arguments" << endl;
+			return 0;
+		}
 	}
 	ifstream file;
-	file.open(argv[1]);
+	if(FORCE)
+		file.open("short_trace1.txt");
+	else
+		file.open(argv[1]);
 	if(!file || !file.good()){
 		cout << "Bad input file" << endl;
 		if(file.is_open())
@@ -26,7 +25,10 @@ int main(int argc, char *argv[]){
 	
 	ofstream output;
 	if(OUTPUT){
-		output.open(argv[2]);
+		if(FORCE)
+			output.open("st1_output.txt");
+		else
+			output.open(argv[2]);
 		if(!output || !output.good()){
 			cout << "Bad output file" << endl;
 			if(output.is_open())
