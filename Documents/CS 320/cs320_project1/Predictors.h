@@ -34,6 +34,7 @@ class List{
 		bool has(unsigned long);
 		T get(unsigned long);
 		bool set(unsigned long, T);
+		bool update(unsigned long);
 		unsigned long getSize(){return this->current_size;};
 };
 

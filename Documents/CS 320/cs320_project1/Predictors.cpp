@@ -272,8 +272,10 @@ Node<T>::Node(unsigned long address, T data, Node * parent){
 
 template <class T>
 bool List<T>::add(unsigned long address){
-	if(this->has(address))
+	if(this->has(address)){
+		this->update(address);
 		return false;
+	}
 	Node* temp=this->root;
 	this->root=new Node(address, this->def);
 	this->root->next=temp;
@@ -317,6 +319,23 @@ bool List<T>::set(unsigned long address, T data){
 	while(current!=NULL){
 		if(current->address==address)
 			break;
+		current=current->next;
+	}
+	if(current==NULL){
+		current=this->root;
+		return false;
+	}
+	current->data=data;
+	return this->update(address);
+	
+}
+
+template <class T>
+bool List<T>::update(unsigned long address){
+	Node * current = this->root;
+	while(current!=NULL){
+		if(current->address==address)
+			break;
 		current->id++;
 		current=current->next;
 	}
@@ -328,7 +347,6 @@ bool List<T>::set(unsigned long address, T data){
 		}
 		return false;
 	}
-	current->data=data;
 	current->id=0;
 	if(current->parent!=NULL)
 		current->parent->next=current->next;
