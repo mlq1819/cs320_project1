@@ -22,7 +22,7 @@ class Node{
 template <class T>
 class List{
 	private:
-		Node * root;
+		Node<T> * root;
 		T def;
 		unsigned long address;
 		unsigned long max_size;
