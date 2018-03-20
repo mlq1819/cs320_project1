@@ -273,7 +273,6 @@ Node<T>::Node(unsigned long address, T data, Node * parent){
 template <class T>
 bool List<T>::add(unsigned long address){
 	if(this->has(address)){
-		this->update(address);
 		return false;
 	}
 	Node<T> * temp=this->root;
@@ -299,7 +298,7 @@ bool List<T>::has(unsigned long address){
 	while(current!=NULL){
 		if(current->address==address)
 			return true;
-		current=current->next; 
+		current=current->next;
 	}
 	return false;
 }
@@ -310,7 +309,7 @@ T List<T>::get(unsigned long address){
 	while(current!=NULL){
 		if(current->address==address)
 			return current->data;
-		current=current->next; 
+		current=current->next;
 	}
 	return this->def;
 }
@@ -321,7 +320,7 @@ bool List<T>::set(unsigned long address, T data){
 	while(current!=NULL){
 		if(current->address==address)
 			break;
-		current=current->next; 
+		current=current->next;
 	}
 	if(current==NULL){
 		current=this->root;
@@ -339,25 +338,27 @@ bool List<T>::update(unsigned long address){
 		if(current->address==address)
 			break;
 		current->id++;
-		current=current->next; 
+		current=current->next;
 	}
 	if(current==NULL){
 		current=this->root;
 		while(current!=NULL){
 			current->id--;
-			current=current->next; 
+			current=current->next;
 		}
 		return false;
 	}
-	current->id=0;
-	if(current->parent!=NULL)
-		current->parent->next=current->next;
-	if(current->next!=NULL)
-		current->next->parent=current->parent;
-	current->parent=NULL;
-	current->next=this->root;
-	this->root->parent=current;
-	this->root=current;
+	if(current!=this->root){
+		current->id=0;
+		if(current->parent!=NULL)
+			current->parent->next=current->next;
+		if(current->next!=NULL)
+			current->next->parent=current->parent;
+		current->parent=NULL;
+		current->next=this->root;
+		this->root->parent=current;
+		this->root=current;
+	}
 	return true;
 }
 
@@ -439,6 +440,8 @@ bool DoubleBimodal::predictOne(string str){
 		this->history->set(address, num+1);
 	else if(!taken && num>0)
 		this->history->set(address, num-1);
+	else
+		this->history->update(address);
 	return toReturn;
 }
 
@@ -477,6 +480,8 @@ bool GShare::predictOne(string str){
 		this->history->set(address, num+1);
 	else if(!taken && num>0)
 		this->history->set(address, num-1);
+	else
+		this->history->update(address);
 	return toReturn;
 }
 
@@ -517,6 +522,8 @@ double Tournament::predict(ifstream * file){
 					this->history->set(address, data+1);
 				else if(data>0 && data<2)
 					this->history->set(address, data-1);
+				else
+					this->history->update(address);
 			}
 		} else {
 			if(picked^not_picked){
@@ -524,7 +531,8 @@ double Tournament::predict(ifstream * file){
 					this->history->set(address, data-1);
 				else
 					this->history->set(address, data+1);
-			}
+			} else
+				this->history->update(address);
 		}
 		
 	}
