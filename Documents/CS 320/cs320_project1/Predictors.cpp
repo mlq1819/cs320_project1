@@ -299,7 +299,7 @@ bool List<T>::has(unsigned long address){
 	while(current!=NULL){
 		if(current->address==address)
 			return true;
-		current=current->next;
+		current=current->next; 
 	}
 	return false;
 }
@@ -310,7 +310,7 @@ T List<T>::get(unsigned long address){
 	while(current!=NULL){
 		if(current->address==address)
 			return current->data;
-		current=current->next;
+		current=current->next; 
 	}
 	return this->def;
 }
@@ -321,7 +321,7 @@ bool List<T>::set(unsigned long address, T data){
 	while(current!=NULL){
 		if(current->address==address)
 			break;
-		current=current->next;
+		current=current->next; 
 	}
 	if(current==NULL){
 		current=this->root;
@@ -339,13 +339,13 @@ bool List<T>::update(unsigned long address){
 		if(current->address==address)
 			break;
 		current->id++;
-		current=current->next;
+		current=current->next; 
 	}
 	if(current==NULL){
 		current=this->root;
 		while(current!=NULL){
 			current->id--;
-			current=current->next;
+			current=current->next; 
 		}
 		return false;
 	}
