@@ -284,8 +284,7 @@ bool List<T>::add(unsigned long address){
 		return false;
 	Node<T> * temp=this->root;
 	this->root=new Node<T>(address, this->def);
-	if(this->root!=NULL)
-		this->root->next=temp;
+	this->root->next=temp;
 	if(temp==NULL)
 		return true;
 	temp->parent=this->root;
@@ -335,10 +334,8 @@ bool List<T>::set(unsigned long address, T data){
 			break;
 		current=current->next;
 	}
-	if(current==NULL){
-		current=this->root;
+	if(current==NULL)
 		return false;
-	}
 	current->data=data;
 	return this->update(address);
 	
@@ -363,8 +360,7 @@ bool List<T>::update(unsigned long address){
 	}
 	if(current!=this->root){
 		current->id=0;
-		if(current->parent!=NULL)
-			current->parent->next=current->next;
+		current->parent->next=current->next;
 		if(current->next!=NULL)
 			current->next->parent=current->parent;
 		current->parent=NULL;
