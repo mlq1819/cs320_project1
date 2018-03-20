@@ -21,8 +21,6 @@ clearmem:
 	
 clearpull:
 	git pull
-	mlq1819
-	mlqvermont12
 	clear
 	clear
 	make clear
