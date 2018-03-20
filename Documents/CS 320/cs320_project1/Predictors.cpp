@@ -256,7 +256,7 @@ int main(int argc, char *argv[]){
 
 template <class T>
 Node<T>::Node(unsigned long address, T data){
-	this->parent=NULL;
+	this->next=this->parent=NULL;
 	this->address=address;
 	this->data=data;
 	this->id=0;
@@ -268,6 +268,14 @@ Node<T>::Node(unsigned long address, T data, Node * parent){
 	this->address=address;
 	this->data=data;
 	this->id=0;
+}
+
+template <class T>
+Node<T>::~Node(){
+	delete this->next;
+	if(this->parent!=NULL)
+		this->parent->next=NULL;
+	this->next=this->parent=NULL();
 }
 
 template <class T>

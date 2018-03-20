@@ -16,7 +16,7 @@ class Node{
 		unsigned long id;
 		Node(unsigned long, T);
 		Node(unsigned long, T, Node *);
-		~Node(){delete next; next=NULL;};
+		~Node();
 };
 
 template <class T>
