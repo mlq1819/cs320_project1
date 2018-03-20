@@ -1,9 +1,16 @@
 #include "Predictors.h"
 #define OUTPUT true
+#define FORCE true
 
 using namespace std;
 
 int main(int argc, char *argv[]){
+	if(FORCE){
+		argc=3;
+		argv[1]="short_trace1.txt";
+		argv[2]="st1_output.txt";
+	}
+	
 	if((OUTPUT && argc<3) || argc<2){
 		cout << "Not enough arguments" << endl;
 		return 0;
