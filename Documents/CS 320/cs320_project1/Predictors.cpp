@@ -368,7 +368,6 @@ bool List<T>::update(unsigned long address){
 		return false;
 	}
 	if(current!=this->root){
-		this->root->parent;
 		current->id=0;
 		current->parent->next=current->next;
 		if(current->next!=NULL)
