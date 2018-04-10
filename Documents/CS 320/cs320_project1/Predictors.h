@@ -7,35 +7,23 @@
 #include <string>
 
 template <class T>
-class Node{
-	public:
-		Node * parent;
-		Node * next;
-		unsigned long address; 
-		T data;
-		unsigned long id;
-		Node(unsigned long, T);
-		Node(unsigned long, T, Node *);
-		~Node();
-};
-
-template <class T>
 class List{
 	private:
-		Node<T> * root;
+		vector<T> table;
+		vector<unsigned long> addresses;
 		T def;
 		unsigned long address;
 		unsigned long max_size;
-		unsigned long current_size;
+		bool update(unsigned long, T);
 	public:
-		List(unsigned long max_size, T def){this->max_size=max_size; this->def=def; this->root=NULL;};
-		~List(){delete this->root; this->root=NULL;};
+		List(unsigned long max_size, T def){this->max_size=max_size; this->def=def; this->table=vector<T>(); this->addresses=vector<unsigned long>()};
 		bool add(unsigned long);
 		bool has(unsigned long);
 		T get(unsigned long);
 		bool set(unsigned long, T);
 		bool update(unsigned long);
-		unsigned long getSize(){return this->current_size;};
+		bool remove(unsigned long);
+		unsigned long getSize(){return this->table.size();};
 };
 
 class AlwaysTaken{

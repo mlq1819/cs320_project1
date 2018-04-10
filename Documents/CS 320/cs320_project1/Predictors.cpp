@@ -264,120 +264,79 @@ int main(int argc, char *argv[]){
 }
 
 template <class T>
-Node<T>::Node(unsigned long address, T data){
-	this->next=this->parent=NULL;
-	this->address=address;
-	this->data=data;
-	this->id=0;
-}
-
-template <class T>
-Node<T>::Node(unsigned long address, T data, Node * parent){
-	this->parent=parent;
-	this->address=address;
-	this->data=data;
-	this->id=0;
-}
-
-template <class T>
-Node<T>::~Node(){
-	delete this->next;
-	if(this->parent!=NULL)
-		this->parent->next=NULL;
-	this->next=this->parent=NULL;
-}
-
-template <class T>
 bool List<T>::add(unsigned long address){
 	if(this->has(address))
 		return false;
-	Node<T> * temp=this->root;
-	this->root=new Node<T>(address, this->def);
-	this->root->next=temp;
-	if(temp==NULL)
-		return true;
-	temp->parent=this->root;
-	while(temp!=NULL){
-		temp->id++;
-		if(temp->id>=this->max_size){
-			delete temp;
-			temp=NULL;
-		} else
-			temp=temp->next;
+	this->table.insert(this->table.begin(), this->def);
+	this->addresses.insert(this->addresses.begin(), address);
+	if(this->size()>this->max_size){
+		this->table.pop_back();
+		this->addresses.pop_back();
 	}
 	return true;
 }
 
 template <class T>
 bool List<T>::has(unsigned long address){
-	Node<T> * current = this->root;
-	while(current!=NULL){
-		if(current->address==address){
-			current=NULL;
-			return true;
+	bool has = false;
+	for(int i=0; i<this->addresses.size(); i++){
+		if(this->addresses[i]==address){
+			has=true;
+			break;
 		}
-		current=current->next;
 	}
-	return false;
+	return has;
 }
 
 template <class T>
 T List<T>::get(unsigned long address){
-	Node<T> * current = this->root;
-	while(current!=NULL){
-		if(current->address==address){
-			T data = current->data;
-			current=NULL;
-			return data;
-		}
-		current=current->next;
-	}
+	for(int i=0; i<this->addresses.size(); i++)
+		if(this->addresses[i]==address)
+			return this->addresses[i];
 	return this->def;
 }
 
 template <class T>
 bool List<T>::set(unsigned long address, T data){
-	Node<T> * current = this->root;
-	while(current!=NULL){
-		if(current->address==address)
-			break;
-		current=current->next;
+	bool isSet = false;
+	for(int i=0; i<this->addresses.size(); i++){
+		if(this->addresses[i]==address){
+			this->table[i]=data;
+			isSet=true;
+		}
 	}
-	if(current==NULL)
+	if(!isSet)
 		return false;
-	current->data=data;
 	return this->update(address);
-	
 }
 
 template <class T>
 bool List<T>::update(unsigned long address){
-	Node<T> * current = this->root;
-	while(current!=NULL){
-		if(current->address==address)
-			break;
-		current->id++;
-		current=current->next;
-	}
-	if(current==NULL){
-		current=this->root;
-		while(current!=NULL){
-			current->id--;
-			current=current->next;
+	for(int i=0; i<this->addresses.size(); i++){
+		if(this->addresses[i]==address){
+			T tempData = this->table[i];
+			this->table.erase(i);
+			this->addresses.erase(i);
+			this->table.insert(this->table.begin(), tempData);
+			this->addresses.insert(this->addresses.begin(), address);
+			return true;
 		}
-		return false;
 	}
-	if(current!=this->root){
-		current->id=0;
-		current->parent->next=current->next;
-		if(current->next!=NULL)
-			current->next->parent=current->parent;
-		current->parent=NULL;
-		current->next=this->root;
-		this->root->parent=current;
-		this->root=current;
+	return false;
+}
+
+template <class T>
+bool List<T>::remove(unsigned long address){
+	bool removed = false;
+	for(int i=0; i<this->addresses.size(); i++){
+		if(this->addresses[i]==address){
+			removed = true;
+			this->addresses.erase(i);
+			this->table.erase(i);
+			break;
+		}
 	}
-	return true;
+	return removed;
 }
 
 double AlwaysTaken::predict(ifstream * file){
